@@ -1,0 +1,10 @@
+{% extends 'ssl/base.html' %}
+{% block conteudo %}
+<form action="{% url 'insere_ssl' %}" method="post">
+    {% csrf_token %}
+    <div class="container form-control-sm py-4 d-flex text-center">
+        <input class="form-control me-2" type="text" name="dominio" placeholder="ixc.exemplo.com.br" aria-label="Dominio">
+        <button class="btn btn-secondary" type="submit">Cadastrar</button>
+    </div>
+</form>
+{% endblock %}
