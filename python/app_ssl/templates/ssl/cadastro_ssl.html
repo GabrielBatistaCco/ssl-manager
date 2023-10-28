@@ -1,10 +1,39 @@
 {% extends 'ssl/base.html' %}
 {% block conteudo %}
-<form action="{% url 'insere_ssl' %}" method="post">
+<form class="m-5" action="{% url 'insere_ssl' %}" method="post">
     {% csrf_token %}
-    <div class="container form-control-sm py-4 d-flex text-center">
-        <input class="form-control me-2" type="text" name="dominio" placeholder="ixc.exemplo.com.br" aria-label="Dominio">
-        <button class="btn btn-secondary" type="submit">Cadastrar</button>
+    <div style="background-color: #b6b6b6;" class="container-sm form-control p-5">
+        <div >
+            <label class="mb-2 fw-bold" for="">Domínio:</label>
+            <input class="form-control me-2 mb-4" type="text" name="dominio" placeholder="ixc.exemplo.com.br" aria-label="Dominio">
+            <label class="mb-2 fw-bold" for="">URL ssls:</label>
+            <input class="form-control me-2 mb-4" type="text" name="url_ssls" placeholder="https://www.ssls.com/user/bundles/view/xxxxxx" aria-label="URL">
+        </div>
+        <div class="text-center">
+            <button class="btn btn-secondary" type="submit">Salvar</button>
+        </div>
     </div>
 </form>
 {% endblock %}
+
+<!-- --bs-blue: #0d6efd;
+  --bs-indigo: #6610f2;
+  --bs-purple: #6f42c1;
+  --bs-pink: #d63384;
+  --bs-red: #dc3545;
+  --bs-orange: #fd7e14;
+  --bs-yellow: #ffc107;
+  --bs-green: #198754;
+  --bs-teal: #20c997;
+  --bs-cyan: #0dcaf0;
+  --bs-white: #fff;
+  --bs-gray: #6c757d;
+  --bs-gray-dark: #343a40;
+  --bs-primary: #0d6efd;
+  --bs-secondary: #6c757d;
+  --bs-success: #198754;
+  --bs-info: #0dcaf0;
+  --bs-warning: #ffc107;
+  --bs-danger: #dc3545;
+  --bs-light: #f8f9fa;
+  --bs-dark: #212529; -->

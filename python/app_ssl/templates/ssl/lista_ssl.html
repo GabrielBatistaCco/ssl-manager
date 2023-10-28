@@ -3,28 +3,32 @@
 {% if certificados %}
     <div class="container">
         <div class="navbar py-4">
-            <div>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar">
-                    <button class="btn btn-secondary" type="submit">Procurar</button>
-                </form>
-            </div>
-            <div>
-                <a class="btn btn-secondary me-2" href="{% url 'deletar_ssl' %}">Detalhes</a>
-                <a class="btn btn-danger" href="{% url 'deletar_ssl' %}">Deletar</a>
-            </div>
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar">
+                <!-- <button class="btn btn-secondary" type="submit">Procurar</button> -->
+            </form>
         </div>
         <table class="table table-bordered table-striped">
-            <tr>
-                <th class="text-center">ID</th>
+            <tr class="text-center">
+                <th>ID</th>
                 <th>Dominio</th>
-                <th class="text-center">x</th>
+                <th>Interação</th>
+                <th>Status</th>
+                <th><a class="btn btn-sm btn-danger" href="{% url 'deletar_ssl' %}">Deletar</a></th>
             </tr>
             {% for certificado in certificados %}
-            <tr>
-                <td class="text-center">{{ certificado.id_ssl }}</td>
+            <tr class="text-center">
+                <td>{{ certificado.id }}</td>
                 <td>{{ certificado.dominio }}</td>
-                <td class="text-center"><input class="form-check-input" type="checkbox" name="ids_ssl" id="{{ certificado.id_ssl }}"></td>
+                <td>
+                    <a class="btn btn-sm btn-secondary my-1" href="">Editar</a>
+                    <a class="btn btn-sm btn-secondary my-1 ms-2" href="">Detalhes</a>
+                    {% if certificado.url_ssls %}
+                        <a class="btn btn-sm btn-secondary my-1 ms-2" target="_blank" href="{{ certificado.url_ssls }}">Acessar ssls</a>
+                    {% endif %}
+                </td>
+                <!-- <td>{{ certificado.status }}</td> -->
+                <td><input class="form-check-input" type="checkbox" name="id" id="{{ certificado.id }}"></td>
             </tr>
             {% endfor %}
         </table>

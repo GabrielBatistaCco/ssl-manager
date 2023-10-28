@@ -17,6 +17,7 @@ def insere_ssl(request):
         # Salvar os dados da tela no banco de dados
         novo_ssl = Certificado()
         novo_ssl.dominio = request.POST.get('dominio')
+        novo_ssl.url_ssls = request.POST.get('url_ssls')
         novo_ssl.save()
 
     return redirect('listar_ssl')
