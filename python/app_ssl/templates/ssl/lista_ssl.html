@@ -12,6 +12,7 @@
             <tr class="text-center">
                 <th>ID</th>
                 <th>Dominio</th>
+                <th>Validade</th>
                 <th>Status</th>
                 <th>Interação</th>
             </tr>
@@ -19,7 +20,8 @@
             <tr class="text-center">
                 <td>{{ certificado.id }}</td>
                 <td>{{ certificado.dominio }}</td>
-                <td>{{ certificado.status }}</td>
+                <td>{{ certificado.validade | default:"-" }}</td>
+                <td>{{ certificado.status | default:"-" }}</td>
                 <td>
                     <div class="btn-group dropright">
                         <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,13 +37,7 @@
                             <a class="dropdown-item text-danger" href="#">Deletar</a>
                         </div>
                     </div>
-                    <!-- <a class="btn btn-sm btn-secondary my-1" href="">Editar</a>
-                    <a class="btn btn-sm btn-secondary my-1 ms-2" href="">Detalhes</a>
-                    {% if certificado.url_ssls %}
-                        <a class="btn btn-sm btn-secondary my-1 ms-2" target="_blank" href="{{ certificado.url_ssls }}">Acessar ssls</a>
-                    {% endif %} -->
                 </td>
-                <!-- <td>{{ certificado.status }}</td> -->
             </tr>
             {% endfor %}
         </table>
