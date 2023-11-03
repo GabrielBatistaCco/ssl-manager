@@ -1,29 +1,20 @@
-from django.shortcuts import render, redirect
-from .models import Certificado
+from .models import Cert
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
+from django.urls import reverse_lazy
 
-def cadastrar_ssl(request):
-    return render(request, 'ssl/cadastro_ssl.html')
+class CertListView(ListView):
+    model = Cert
 
-def listar_ssl(request):
-    # Consultar certificados cadastrados em uma nova página
-    certificados = {
-        'certificados': Certificado.objects.all()
-    }
-    # Retornar certificados para página de listagem
-    return render(request, 'ssl/lista_ssl.html', certificados)
+class CertCreateView(CreateView):
+    model = Cert
+    fields = ["dominio", "url_ssls"]
+    success_url = reverse_lazy("lista_ssl")
 
-def insere_ssl(request):
-    if request.method == 'POST':
-        # Salvar os dados da tela no banco de dados
-        novo_ssl = Certificado()
-        novo_ssl.dominio = request.POST.get('dominio')
-        novo_ssl.url_ssls = request.POST.get('url_ssls')
-        novo_ssl.save()
+class CertUpdateView(UpdateView):
+    model = Cert
+    fields = ["dominio", "url_ssls"]
+    success_url = reverse_lazy("lista_ssl")
 
-    return redirect('listar_ssl')
-
-def deletar_ssl(request):
-    if request.method == "DELETE":
-        deletar_ssl = Certificado()
-        deletar_ssl.id_ssl = request.DELETE.getlist('ids_ssl')
-        deletar_ssl.save()
+class CertDeleteView(DeleteView):
+    model = Cert
+    success_url = reverse_lazy("lista_ssl")

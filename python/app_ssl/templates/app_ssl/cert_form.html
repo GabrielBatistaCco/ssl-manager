@@ -1,13 +1,17 @@
-{% extends 'ssl/base.html' %}
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
 {% block conteudo %}
-<form class="m-5" action="{% url 'insere_ssl' %}" method="post">
+<form class="m-5" method="POST">
     {% csrf_token %}
     <div class="border rounded-3 container-sm p-5">
-        <div >
+        <!-- <div >
             <label class="mb-2 fw-bold" for="">Domínio:</label>
             <input class="form-control me-2 mb-4" type="text" name="dominio" placeholder="ixc.exemplo.com.br" aria-label="Dominio">
             <label class="mb-2 fw-bold" for="">URL ssls:</label>
             <input class="form-control me-2 mb-4" type="text" name="url_ssls" placeholder="https://www.ssls.com/user/bundles/view/xxxxxx" aria-label="URL">
+        </div> -->
+        <div class="mb-3">
+            {{ form|crispy }}
         </div>
         <div class="text-center">
             <button class="btn btn-secondary" type="submit">Salvar</button>

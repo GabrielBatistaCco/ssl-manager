@@ -1,6 +1,6 @@
-{% extends 'ssl/base.html' %}
+{% extends 'base.html' %}
 {% block conteudo %}
-{% if certificados %}
+{% if cert_list %}
     <div class="container">
         <div class="navbar py-4">
             <form class="d-flex">
@@ -16,25 +16,25 @@
                 <th>Status</th>
                 <th>Interação</th>
             </tr>
-            {% for certificado in certificados %}
+            {% for cert in cert_list %}
             <tr class="text-center">
-                <td>{{ certificado.id }}</td>
-                <td>{{ certificado.dominio }}</td>
-                <td>{{ certificado.validade | default:"-" }}</td>
-                <td>{{ certificado.status | default:"-" }}</td>
+                <td>{{ cert.id }}</td>
+                <td>{{ cert.dominio }}</td>
+                <td>{{ cert.validade | default:"-" }}</td>
+                <td>{{ cert.status | default:"-" }}</td>
                 <td>
                     <div class="btn-group dropright">
                         <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Ações
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Editar</a>
-                            <a class="dropdown-item" href="#">Detalhes</a>
-                            {% if certificado.url_ssls %}
-                                <a class="dropdown-item" target="_blank" href="{{ certificado.url_ssls }}">Acessar ssls</a>
+                            <a class="dropdown-item" href="{% url 'editar_ssl' pk=cert.pk %}">Editar</a>
+                            {% if cert.url_ssls %}
+                            <a class="dropdown-item" target="_blank" href="{{ cert.url_ssls }}">Acessar ssls</a>
                             {% endif %}
+                            <a class="dropdown-item" href="#">Detalhes</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="#">Deletar</a>
+                            <a class="dropdown-item text-danger" href="{% url 'excluir_ssl' pk=cert.pk %}">Deletar</a>
                         </div>
                     </div>
                 </td>
@@ -44,7 +44,7 @@
     </div>
 {% else %}
     <div class="container p-4">
-        <p>Não há certificados cadastrados!</p>
+        <p>Não há certs cadastrados!</p>
     </div>
 {% endif %}
 
