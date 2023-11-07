@@ -1,6 +1,7 @@
 from .models import Cert
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 
 class CertListView(ListView):
     model = Cert
