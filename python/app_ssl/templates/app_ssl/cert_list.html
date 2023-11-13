@@ -2,10 +2,11 @@
 {% block conteudo %}
 {% if cert_list %}
     <div class="container">
+        
         <div class="navbar py-4">
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Procurar" aria-label="Procurar">
-                <!-- <button class="btn btn-secondary" type="submit">Procurar</button> -->
+                <input class="form-control me-2" name="cert_list" type="text" placeholder="Procurar domínio" aria-label="Procurar domínio">
+                <button class="btn btn-secondary" type="submit">Procurar</button>
             </form>
         </div>
         <table class="table table-bordered">
@@ -16,31 +17,31 @@
                 <th>Status</th>
                 <th>Interação</th>
             </tr>
-            {% for cert in cert_list %}
+            {% for certificado in cert_list %}
             <tr class="text-center">
-                <td>{{ cert.id }}</td>
-                <td>{{ cert.dominio }}</td>
-                <td>{{ cert.validade | default:"-" }}</td>
-                <td>{{ cert.status | default:"-" }}</td>
+                <td>{{ certificado.id }}</td>
+                <td>{{ certificado.dominio }}</td>
+                <td>{{ certificado.validade_ssl | default:"-" }}</td>
+                <td>{{ certificado.status_ssl | default:"-" }}</td>
                 <td>
                     <div class="btn-group dropright">
                         <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Ações
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{% url 'editar_ssl' pk=cert.pk %}">Editar</a>
-                            {% if cert.url_ssls %}
-                            <a class="dropdown-item" target="_blank" href="{{ cert.url_ssls }}">Acessar ssls</a>
+                            <a class="dropdown-item" href="{% url 'editar_ssl' pk=certificado.pk %}">Editar</a>
+                            {% if certificado.url_ssls %}
+                            <a class="dropdown-item" target="_blank" href="{{ certificado.url_ssls }}">Acessar ssls</a>
                             {% endif %}
                             <a class="dropdown-item" href="#">Detalhes</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-{{ cert.pk }}">Excluir</a>
+                            <a class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-{{ certificado.pk }}">Excluir</a>
                         </div>
                     </div>
                 </td>
             </tr>
             <!-- Modal de confirmação de exclusão -->
-            <div class="modal fade" id="confirmDeleteModal-{{ cert.pk }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+            <div class="modal fade" id="confirmDeleteModal-{{ certificado.pk }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -50,13 +51,13 @@
                         <div class="modal-body">
                             Tem certeza de que deseja excluir este item?
                             </br>
-                            ID: {{ cert.pk }}
+                            ID: {{ certificado.pk }}
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <form action="{% url 'excluir_ssl' pk=cert.pk %}" method="post">
+                            <form action="{% url 'excluir_ssl' pk=certificado.pk %}" method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="pk" value="{{ cert.pk }}">
+                                <input type="hidden" name="pk" value="{{ certificado.pk }}">
                                 <button type="submit" class="btn btn-danger">Excluir</button>
                             </form>
                         </div>
