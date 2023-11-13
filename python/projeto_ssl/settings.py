@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'app_ssl',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_cron',
+]
+
+CRON_CLASSES = [
+    'django_cron.cron.CronJobBase',
 ]
 
 MIDDLEWARE = [

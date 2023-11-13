@@ -1,9 +1,11 @@
 from django.db import models
 
 class StatusSSL(models.TextChoices):
-    ATIVO = 'Ativo', 'Ativo'
-    INATIVO = 'Inativo', 'Inativo'
-    VENCIDO = 'Vencido', 'Vencido'
+    VAZIO = None , '-'
+    ATIVO = 'Ativo'
+    INATIVO = 'Inativo'
+    VENCIDO = 'Vencido'
+    ABANDONADO = 'Abandonado'
 
 class Cert (models.Model):
     id = models.AutoField(primary_key=True)
@@ -11,7 +13,7 @@ class Cert (models.Model):
     url_ssls = models.CharField(verbose_name="URL ssls", null=True, max_length=100)
     validade_ssl = models.DateField(verbose_name="Validade certificado", null=True)
     criado_em = models.DateTimeField(verbose_name="Data cadastro", auto_now_add=True, null=False, blank=False)
-    organizacao = models.CharField(verbose_name="Organização", null=True, max_length=100)
+    issuer = models.CharField(verbose_name="Organização", null=True, max_length=100)
     status_ssl = models.CharField(
         max_length=10,
         choices=StatusSSL.choices,

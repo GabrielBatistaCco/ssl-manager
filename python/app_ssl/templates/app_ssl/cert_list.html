@@ -13,6 +13,7 @@
             <tr class="text-center">
                 <th>ID</th>
                 <th>Dominio</th>
+                <th>Emissor</th>
                 <th>Validade</th>
                 <th>Status</th>
                 <th>Interação</th>
@@ -21,6 +22,7 @@
             <tr class="text-center">
                 <td>{{ certificado.id }}</td>
                 <td>{{ certificado.dominio }}</td>
+                <td>{{ certificado.issuer }}</td>
                 <td>{{ certificado.validade_ssl | default:"-" }}</td>
                 <td>{{ certificado.status_ssl | default:"-" }}</td>
                 <td>
