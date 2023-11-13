@@ -33,3 +33,5 @@ class GetSSLCert:
                 'organizacao': None,
                 'status_ssl': 'Inativo',
             }
+        finally:
+            socket.setdefaulttimeout(None)
