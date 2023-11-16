@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import URLValidator
 
 class StatusSSL(models.TextChoices):
     VAZIO = None , '-'
@@ -12,11 +14,29 @@ class Cert (models.Model):
     dominio = models.CharField(verbose_name="Domínio", max_length=100)
     url_ssls = models.CharField(verbose_name="URL ssls", null=True, max_length=100)
     validade_ssl = models.DateField(verbose_name="Validade certificado", null=True)
-    criado_em = models.DateTimeField(verbose_name="Data cadastro", auto_now_add=True, null=False, blank=False)
-    issuer = models.CharField(verbose_name="Organização", null=True, max_length=100)
+    issuer = models.CharField(verbose_name="Emissor", null=True, max_length=100)
     status_ssl = models.CharField(
         max_length=10,
         choices=StatusSSL.choices,
         verbose_name='Status SSL',
-        default=None
+        null=True,
     )
+    criado_em = models.DateTimeField(verbose_name="Data cadastro", auto_now_add=True, null=False, blank=False)
+
+
+    def clean(self):
+        super().clean()
+
+        if self.url_ssls:
+            if not (self.url_ssls.startswith('http://') or self.url_ssls.startswith('https://')):
+                self.url_ssls = f'https://{self.url_ssls}'
+
+            url_validator = URLValidator(schemes=['http', 'https'])
+            try:
+                url_validator(self.url_ssls)
+            except ValidationError:
+                raise ValidationError({'url_ssls': 'A URL deve ter o formato correto (por exemplo, "https://www.exemplo.com")'})
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)

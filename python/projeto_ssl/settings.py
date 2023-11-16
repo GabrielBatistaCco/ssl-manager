@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'app_ssl',
     'crispy_forms',
     'crispy_bootstrap5',
-    'django_cron',
+    'rest_framework',
 ]
 
 CRON_CLASSES = [
