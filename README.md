@@ -20,4 +20,4 @@ python3 manage.py runserver
 
 # Fluxo de entrega do software
 
-<img src="./Fluxo-entrega-sf.png">
+<img src="./Fluxo-entrega.png">
