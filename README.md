@@ -18,8 +18,6 @@ python3 manage.py migrate
 python3 manage.py runserver
 ```
 
-# Modelo de desenvolvimento
+# Fluxo de entrega do software
 
-Branchs
-
-<img src="/assets/img/branchs.gif">
+<img src="./Fluxo-entrega.png">
