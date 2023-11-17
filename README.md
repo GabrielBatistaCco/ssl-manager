@@ -1,4 +1,4 @@
-# SSL
+# Instalação e execução
 
 ```
 apt install python3 -y
@@ -16,5 +16,10 @@ python3 manage.py migrate
 
 # Executar server
 python3 manage.py runserver
-
 ```
+
+# Modelo de desenvolvimento
+
+Branchs
+
+<img src="/assets/img/branchs.gif">

@@ -1,12 +1,16 @@
-from .models import Cert
-from .get_ssl import GetSSLCert
-# from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
-from django.shortcuts import render
-# , get_object_or_404, redirect
 # from django.urls import reverse, reverse_lazy
 # from django.http import HttpResponseRedirect
+# from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
+from .models import Cert
+from .get_ssl import GetSSLCert
+from django.shortcuts import render
+# , get_object_or_404, redirect
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework import viewsets
 from .serializers import CertSerializer
+import pandas as pd
+import asyncio
 
 class CertViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
@@ -16,72 +20,77 @@ class CertViewSet(viewsets.ModelViewSet):
         dominio = serializer.validated_data.get('dominio')
 
         get_ssl = GetSSLCert(dominio)
-        resultado_ssl = get_ssl.get_certificado()
 
-        serializer.validated_data.update(resultado_ssl)
+        resultado_validade = get_ssl.get_validade_ssl()
+        resultado_status = get_ssl.get_status_ssl()
+        serializer.validated_data.update(resultado_validade)
+        serializer.validated_data.update(resultado_status)
 
-        super().perform_create(serializer)
+        serializer.save()
 
     def perform_update(self, serializer):
         dominio = serializer.validated_data.get('dominio')
 
         get_ssl = GetSSLCert(dominio)
-        resultado_ssl = get_ssl.get_certificado()
 
-        serializer.validated_data.update(resultado_ssl)
+        resultado_validade = get_ssl.get_validade_ssl()
+        resultado_status = get_ssl.get_status_ssl()
+        serializer.validated_data.update(resultado_validade)
+        serializer.validated_data.update(resultado_status)
 
-        super().perform_update(serializer)
+        serializer.save()
+    
+class CsvViewSet(viewsets.ModelViewSet):
+    queryset = Cert.objects.all()
 
-# class CertListView(ListView):
-#     model = Cert
-#     fields = ["dominio", "url_ssls"]
-#     success_url = reverse_lazy("lista_ssl")
-#     # context_object_name = 'cert_list'
-#     # paginate_by = 15
+    @action(detail=False, methods=['POST'])
+    def importar_csv(self, request):
+        if 'arquivo' not in request.FILES:
+            return Response({'detail': 'O arquivo não foi fornecido'}, status=400)
 
-#     # def get_queryset(self):
-#     #     query = self.request.GET.get('pesquisa')
-#     #     if query and len(query) >= 4:
-#     #         return Cert.objects.filter(dominio__icontains=query)
-#     #     return Cert.objects.all()
+        arquivo_csv = request.FILES['arquivo']
 
-# class CertCreateView(CreateView):
-#     model = Cert
-#     fields = ['dominio', 'url_ssls']
-#     success_url = reverse_lazy("lista_ssl")
+        try:
+            dados_csv = pd.read_csv(arquivo_csv)
+            dados_filtrados = dados_csv[
+                (dados_csv['details_URL'].notna()) &
+                (dados_csv['status'].isin(['ISSUED', 'PAUSED', 'UNUSED']))
+            ]
+            campos_modelo = Cert._meta.get_fields()
 
-#     def form_valid(self, form):
-#         dominio = form.cleaned_data['dominio']
+            for index, linha in dados_filtrados.iterrows():
+                csv_dominio = linha.get('common_name')
+                csv_validade_ssl = linha.get('expire_date')
+                csv_status_ssl = linha.get('status')
 
-#         cert_exists = Cert.objects.filter(dominio=dominio).exists()
+                get_ssl = GetSSLCert(csv_dominio, status_ssl=csv_status_ssl, validade_ssl=csv_validade_ssl)
+                get_status_ssl = get_ssl.get_status_ssl()
+                
+                status_ssl = get_status_ssl['status_ssl']
+                dominio = get_status_ssl['dominio'] if 'dominio' in get_status_ssl else csv_dominio
+                validade_ssl = get_status_ssl['validade_ssl'] if 'validade_ssl' in get_status_ssl else csv_validade_ssl
 
-#         if cert_exists:
-#             cert_obj = get_object_or_404(Cert, dominio=dominio)
-#             edit_url = reverse('editar_ssl', kwargs={'pk': cert_obj.pk})
-            
-#             return redirect(edit_url)
-#         else:
-#             get_ssl = GetSSLCert(dominio)
-#             resultado_ssl = get_ssl.get_certificado()
+                valores_campos = {
+                    'dominio': dominio,
+                    'url_ssls': linha.get('details_URL'),
+                    'validade_ssl': validade_ssl,
+                    'issuer': linha.get('type'),
+                    'status_ssl': status_ssl
+                }
 
-#             form.instance.__dict__.update(**resultado_ssl)
+                print(valores_campos)
 
-#             return super().form_valid(form)
+                cert_instance, index = Cert.objects.get_or_create(dominio=csv_dominio)
 
-# class CertUpdateView(UpdateView):
-#     model = Cert
-#     fields = ['dominio', 'url_ssls']
-#     success_url = reverse_lazy("lista_ssl")
+                for campo, valor in valores_campos.items():
+                    setattr(cert_instance, campo, valor)
 
-#     def form_valid(self, form):
-#         dominio = form.cleaned_data['dominio']
-#         get_ssl = GetSSLCert(dominio)
+                cert_instance.save()
 
-#         resultado_ssl = get_ssl.get_certificado()
-#         form.instance.__dict__.update(**resultado_ssl)
+            return Response({'detail': 'Dados importados com sucesso'}, status=200)
 
-#         return super().form_valid(form)
+        except pd.errors.EmptyDataError:
+            return Response({'detail': 'O arquivo CSV está vazio'}, status=400)
 
-# class CertDeleteView(DeleteView):
-#     model = Cert
-#     success_url = reverse_lazy("lista_ssl")
+        except pd.errors.ParserError:
+            return Response({'detail': 'Erro ao analisar o arquivo CSV'}, status=400)

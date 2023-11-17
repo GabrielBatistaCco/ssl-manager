@@ -4,20 +4,11 @@ from django.core.validators import URLValidator
 
 class Cert (models.Model):
 
-    STATUS_CHOICES = [
-        ('Ativo', 'Ativo'),
-        ('Inativo', 'Inativo'),
-        ('Vencido', 'Vencido'),
-        ('Abandonado', 'Abandonado'),
-        ('Último dia', 'Último dia'),
-        ('Disponível', 'Disponível')
-    ]
-
     id = models.AutoField(primary_key=True)
     dominio = models.CharField(
         verbose_name="Domínio", 
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
         unique=True,
         error_messages={
             'unique': 'Este domínio já está cadastrado.',
@@ -42,10 +33,17 @@ class Cert (models.Model):
         max_length=100
     )
     status_ssl = models.CharField(
-        choices=STATUS_CHOICES,
+        choices=[
+            ('Ativo', 'Ativo'),
+            ('Inativo', 'Inativo'),
+            ('Vencido', 'Vencido'),
+            ('Abandonado', 'Abandonado'),
+            ('Último dia', 'Último dia'),
+            ('Disponível', 'Disponível')
+        ],
         verbose_name='Status SSL',
         null=True,
-        blank=False,
+        blank=True,
         max_length=10
     )
     criado_em = models.DateTimeField(
@@ -59,11 +57,8 @@ class Cert (models.Model):
         super().clean()
 
         if self.url_ssls:
-            if Cert.objects.filter(dominio=self.dominio).exclude(pk=self.pk).exists():
+            if self.dominio is not None and Cert.objects.filter(dominio=self.dominio).exclude(pk=self.pk).exists():
                 raise ValidationError({'dominio': self.field.error_messages['unique']})
-
-            # if not (self.url_ssls.startswith('http://') or self.url_ssls.startswith('https://')):
-            #     self.url_ssls = f'https://{self.url_ssls}'
 
             url_validator = URLValidator(schemes=['http', 'https'])
             try:

@@ -12,3 +12,6 @@ class CertSerializer(serializers.ModelSerializer):
          'status_ssl',
          'issuer'
         )
+
+    def create(self, validated_data):
+        return Cert.objects.create(**validated_data)
