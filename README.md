@@ -26,6 +26,6 @@ Cada etapa do fluxo é uma ramificação no desenvolvimento do software:
 
 - **Front-end e Back-end**: Ramificações distintas, pois os desenvolvimentos são isolados, permitindo serem execudados em paralelo com segurança de que um não afatará no outro.
 
-- **Teste**: Versão unificada da anterior, onde podemos testar a integração do front-end com o back-end junto das funcionlidades programadas. 
+- **Teste**: Versão unificada do front-end com o back-end, onde podemos testar sua integração e as funcionlidades programadas.
 
 - **Produção**: A versão disponibilizada para os usuários utilizarem.
