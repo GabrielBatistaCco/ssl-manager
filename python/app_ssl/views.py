@@ -1,96 +1,105 @@
-# from django.urls import reverse, reverse_lazy
-# from django.http import HttpResponseRedirect
-# from django.views.generic import ListView, CreateView, UpdateView, DeleteView, View
 from .models import Cert
 from .get_ssl import GetSSLCert
 from django.shortcuts import render
-# , get_object_or_404, redirect
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from .serializers import CertSerializer
 import pandas as pd
-import asyncio
 
 class CertViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
     serializer_class = CertSerializer
 
     def perform_create(self, serializer):
-        dominio = serializer.validated_data.get('dominio')
-
-        get_ssl = GetSSLCert(dominio)
-
-        resultado_validade = get_ssl.get_validade_ssl()
-        resultado_status = get_ssl.get_status_ssl()
-        serializer.validated_data.update(resultado_validade)
-        serializer.validated_data.update(resultado_status)
-
-        serializer.save()
+        self.perform_cert_operation(serializer)
 
     def perform_update(self, serializer):
-        dominio = serializer.validated_data.get('dominio')
+        self.perform_cert_operation(serializer)
 
-        get_ssl = GetSSLCert(dominio)
+    def perform_cert_operation(self, serializer):
+        form_dominio = serializer.validated_data.get('dominio')
+        form_url_ssls = serializer.validated_data.get('url_ssls')
 
-        resultado_validade = get_ssl.get_validade_ssl()
-        resultado_status = get_ssl.get_status_ssl()
-        serializer.validated_data.update(resultado_validade)
-        serializer.validated_data.update(resultado_status)
+        if not form_dominio or not form_url_ssls:
+            return Response({'detail': 'Pelo menos um dos campos "Domínio" ou "URL ssls" deve ser preenchido.'}, status=status.HTTP_400_BAD_REQUEST)
 
+        get_ssl = GetSSLCert(dominio=form_dominio)
+
+        try:
+            dados_certificado = get_ssl.get_certificado(validade=True, status=True)
+        except Exception as e:
+            return Response({'detail': f'Erro ao obter o certificado: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        serializer.validated_data.update(dados_certificado)
         serializer.save()
-    
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({'detail': 'Registro excluido com sucesso.'}, status=status.HTTP_200_OK)
+
 class CsvViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
+    serializer_class = CertSerializer
 
     @action(detail=False, methods=['POST'])
     def importar_csv(self, request):
         if 'arquivo' not in request.FILES:
-            return Response({'detail': 'O arquivo não foi fornecido'}, status=400)
+            return Response({'detail': 'O arquivo não foi fornecido'}, status=status.HTTP_400_BAD_REQUEST)
 
         arquivo_csv = request.FILES['arquivo']
 
         try:
             dados_csv = pd.read_csv(arquivo_csv)
-            dados_filtrados = dados_csv[
-                (dados_csv['details_URL'].notna()) &
-                (dados_csv['status'].isin(['ISSUED', 'PAUSED', 'UNUSED']))
-            ]
-            campos_modelo = Cert._meta.get_fields()
+            dados_filtrados = self.filtrar_dados_csv(dados_csv)
 
             for index, linha in dados_filtrados.iterrows():
-                csv_dominio = linha.get('common_name')
-                csv_validade_ssl = linha.get('expire_date')
-                csv_status_ssl = linha.get('status')
+                self.processar_linha_csv(linha)
 
-                get_ssl = GetSSLCert(csv_dominio, status_ssl=csv_status_ssl, validade_ssl=csv_validade_ssl)
-                get_status_ssl = get_ssl.get_status_ssl()
-                
-                status_ssl = get_status_ssl['status_ssl']
-                dominio = get_status_ssl['dominio'] if 'dominio' in get_status_ssl else csv_dominio
-                validade_ssl = get_status_ssl['validade_ssl'] if 'validade_ssl' in get_status_ssl else csv_validade_ssl
-
-                valores_campos = {
-                    'dominio': dominio,
-                    'url_ssls': linha.get('details_URL'),
-                    'validade_ssl': validade_ssl,
-                    'issuer': linha.get('type'),
-                    'status_ssl': status_ssl
-                }
-
-                print(valores_campos)
-
-                cert_instance, index = Cert.objects.get_or_create(dominio=csv_dominio)
-
-                for campo, valor in valores_campos.items():
-                    setattr(cert_instance, campo, valor)
-
-                cert_instance.save()
-
-            return Response({'detail': 'Dados importados com sucesso'}, status=200)
+            return Response({'detail': 'Dados importados com sucesso'}, status=status.HTTP_200_OK)
 
         except pd.errors.EmptyDataError:
-            return Response({'detail': 'O arquivo CSV está vazio'}, status=400)
+            return Response({'detail': 'O arquivo CSV está vazio'}, status=status.HTTP_400_BAD_REQUEST)
 
         except pd.errors.ParserError:
-            return Response({'detail': 'Erro ao analisar o arquivo CSV'}, status=400)
+            return Response({'detail': 'Erro ao analisar o arquivo CSV'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def filtrar_dados_csv(self, dados_csv):
+        return dados_csv[
+            (dados_csv['details_URL'].notna()) &
+            (dados_csv['status'].isin(['ISSUED', 'PAUSED', 'UNUSED']))&
+            (~dados_csv['common_name'].astype(str).str.startswith('*'))
+        ]
+
+    def processar_linha_csv(self, linha):
+        csv_dominio = linha.get('common_name')
+        csv_validade_ssl = linha.get('expire_date')
+        csv_status_ssl = linha.get('status')
+        csv_url_ssls = linha.get('details_URL')
+
+        get_ssl = GetSSLCert(
+            dominio=csv_dominio,
+            status_ssl=csv_status_ssl,
+            validade_ssl=csv_validade_ssl,
+            url_ssls=csv_url_ssls
+        )
+
+        dados_certificado = {
+            'dominio': get_ssl.dominio,
+            'url_ssls': linha.get('details_URL'),
+            'validade_ssl': get_ssl.validade_ssl,
+            'issuer': get_ssl.issuer,
+            'status_ssl': get_ssl.status_ssl
+        }
+
+        dados_certificado.update(get_ssl.get_certificado(validade=False))
+
+        csv_cert, index = Cert.objects.get_or_create(dominio=csv_dominio)
+
+        for campo, valor in dados_certificado.items():
+            setattr(csv_cert, campo, valor)
+
+        csv_cert.save()
+        # print(valores_campos)

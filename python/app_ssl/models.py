@@ -1,6 +1,7 @@
-from django.db import models
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError as DRFValidationError
+from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
+from django.db import models
 
 class Cert (models.Model):
 
@@ -56,20 +57,20 @@ class Cert (models.Model):
     def clean(self):
         super().clean()
 
-        if self.url_ssls:
-            if self.dominio is not None and Cert.objects.filter(dominio=self.dominio).exclude(pk=self.pk).exists():
-                raise ValidationError({'dominio': self.field.error_messages['unique']})
+        if self.dominio and Cert.objects.filter(dominio=self.dominio).exclude(pk=self.pk).exists():
+            raise DRFValidationError({'dominio': f'O domínio "{self.dominio}" já está cadastrado.'})
 
+        if self.url_ssls:
             url_validator = URLValidator(schemes=['http', 'https'])
             try:
                 url_validator(self.url_ssls)
             except ValidationError:
-                raise ValidationError({'url_ssls': 'A URL deve ter o formato correto (por exemplo, "https://www.exemplo.com")'})
+                raise DRFValidationError({'url_ssls': 'A URL deve ter o formato correto (por exemplo, "https://www.exemplo.com")'})
 
     def save(self, *args, **kwargs):
         try:
             self.full_clean()
-        except ValidationError as e:
-            raise ValidationError(detail=e.message_dict)
+        except DRFValidationError as e:
+            raise e
 
         super().save(*args, **kwargs)
