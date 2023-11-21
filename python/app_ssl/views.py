@@ -3,6 +3,7 @@ from .get_ssl import GetSSLCert
 from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.exceptions import ValidationError
 from rest_framework import viewsets, status
 from .serializers import CertSerializer
 import pandas as pd
@@ -11,18 +12,12 @@ class CertViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
     serializer_class = CertSerializer
 
-    def perform_create(self, serializer):
-        self.perform_cert_operation(serializer)
-
-    def perform_update(self, serializer):
-        self.perform_cert_operation(serializer)
-
-    def perform_cert_operation(self, serializer):
+    def perform_cert_operation(self, serializer, is_update=False):
         form_dominio = serializer.validated_data.get('dominio')
         form_url_ssls = serializer.validated_data.get('url_ssls')
 
-        if not form_dominio or not form_url_ssls:
-            return Response({'detail': 'Pelo menos um dos campos "Domínio" ou "URL ssls" deve ser preenchido.'}, status=status.HTTP_400_BAD_REQUEST)
+        if not form_dominio and not form_url_ssls:
+            raise ValidationError({'detail': 'Pelo menos um dos campos "Domínio" ou "URL ssls" deve ser preenchido.'})
 
         get_ssl = GetSSLCert(dominio=form_dominio)
 
@@ -34,6 +29,25 @@ class CertViewSet(viewsets.ModelViewSet):
         serializer.validated_data.update(dados_certificado)
         serializer.save()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_cert_operation(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_cert_operation(serializer, is_update=True)
+        return Response(serializer.data)
+
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
         self.perform_destroy(instance)
@@ -44,9 +58,10 @@ class CsvViewSet(viewsets.ModelViewSet):
     serializer_class = CertSerializer
 
     @action(detail=False, methods=['POST'])
+
     def importar_csv(self, request):
         if 'arquivo' not in request.FILES:
-            return Response({'detail': 'O arquivo não foi fornecido'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'O arquivo não foi fornecido.'}, status=status.HTTP_400_BAD_REQUEST)
 
         arquivo_csv = request.FILES['arquivo']
 
@@ -64,7 +79,6 @@ class CsvViewSet(viewsets.ModelViewSet):
 
         except pd.errors.ParserError:
             return Response({'detail': 'Erro ao analisar o arquivo CSV'}, status=status.HTTP_400_BAD_REQUEST)
-
 
     def filtrar_dados_csv(self, dados_csv):
         return dados_csv[
@@ -101,5 +115,5 @@ class CsvViewSet(viewsets.ModelViewSet):
         for campo, valor in dados_certificado.items():
             setattr(csv_cert, campo, valor)
 
+        print(dados_certificado)
         csv_cert.save()
-        # print(valores_campos)

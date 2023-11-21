@@ -78,9 +78,9 @@ class GetSSLCert:
 
         if validade:
             dados_certificado.update(self.get_validade_ssl())
-        
+
         if status:
             dados_certificado.update(self.get_status_ssl())
-            print(dados_certificado)
 
+        # print(dados_certificado)
         return dados_certificado
