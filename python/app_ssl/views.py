@@ -19,7 +19,7 @@ class CertViewSet(viewsets.ModelViewSet):
         if not form_dominio and not form_url_ssls:
             raise ValidationError({'detail': 'Pelo menos um dos campos "Domínio" ou "URL ssls" deve ser preenchido.'})
 
-        get_ssl = GetSSLCert(dominio=form_dominio)
+        get_ssl = GetSSLCert(dominio=form_dominio, url_ssls=form_url_ssls)
 
         try:
             dados_certificado = get_ssl.get_certificado(validade=True, status=True)
@@ -27,6 +27,7 @@ class CertViewSet(viewsets.ModelViewSet):
             return Response({'detail': f'Erro ao obter o certificado: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         serializer.validated_data.update(dados_certificado)
+        print(dados_certificado)
         serializer.save()
 
     def create(self, request, *args, **kwargs):
@@ -108,7 +109,7 @@ class CsvViewSet(viewsets.ModelViewSet):
             'status_ssl': get_ssl.status_ssl
         }
 
-        dados_certificado.update(get_ssl.get_certificado(validade=False))
+        dados_certificado.update(get_ssl.get_certificado(validade=True))
 
         csv_cert, index = Cert.objects.get_or_create(dominio=csv_dominio)
 

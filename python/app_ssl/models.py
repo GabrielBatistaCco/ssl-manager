@@ -2,6 +2,7 @@ from rest_framework.exceptions import ValidationError as DRFValidationError
 from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.db import models
+import re
 
 class Cert (models.Model):
 
@@ -40,12 +41,13 @@ class Cert (models.Model):
             ('Vencido', 'Vencido'),
             ('Abandonado', 'Abandonado'),
             ('Último dia', 'Último dia'),
-            ('Disponível', 'Disponível')
+            ('Disponível', 'Disponível'),
+            ('Inconsistente','Inconsistente')
         ],
         verbose_name='Status SSL',
-        null=True,
+        null=False,
         blank=True,
-        max_length=10
+        max_length=13
     )
     criado_em = models.DateTimeField(
         verbose_name="Data cadastro", 
@@ -61,11 +63,10 @@ class Cert (models.Model):
             raise DRFValidationError({'dominio': f'O domínio "{self.dominio}" já está cadastrado.'})
 
         if self.url_ssls:
-            url_validator = URLValidator(schemes=['http', 'https'])
-            try:
-                url_validator(self.url_ssls)
-            except ValidationError:
-                raise DRFValidationError({'url_ssls': 'A URL deve ter o formato correto (por exemplo, "https://www.exemplo.com")'})
+            # https://www.ssls.com/user/bundles/view/...
+            url_validator = re.compile(r'^(http|https)://(www\.)?ssls\.com/user/bundles/view/[a-zA-Z0-9]+$')
+            if not url_validator.match(self.url_ssls):
+                raise DRFValidationError({'url_ssls': 'URL inválida, deve estar no formato "https://www.ssls.com/user/bundles/view/..."'})
 
     def save(self, *args, **kwargs):
         try:
