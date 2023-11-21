@@ -47,7 +47,7 @@ class GetSSLCert:
 
         if self.status_ssl == 'UNUSED':
             self.status_ssl = 'Disponível'
-        elif self.url_ssls is not None and (self.issuer and self.issuer.lower() == "let's encrypt"):
+        elif self.url_ssls is not None and self.url_ssls.strip() != '' and (self.issuer and self.issuer.lower() == "let's encrypt"):
             self.status_ssl = 'Inconsistente'
         elif self.validade_ssl is not None:
             self.validade_ssl = datetime.strptime(
@@ -61,7 +61,7 @@ class GetSSLCert:
                 self.status_ssl = 'Último dia'
             else:
                 self.status_ssl = 'Vencido'
-        elif self.dominio is not None and self.url_ssls is not None:
+        elif (self.dominio and self.url_ssls and self.validade_ssl) is not None:
             self.status_ssl = 'Abandonado'
         else:
             self.status_ssl = 'Inativo'
