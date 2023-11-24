@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_ssl',
     'rest_framework',
+    'corsheaders',
 ]
-
 
 APPEND_SLASH = False
 
@@ -48,6 +48,7 @@ CRON_CLASSES = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,6 +74,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:8080"
 ]
 
 WSGI_APPLICATION = 'projeto_ssl.wsgi.application'

@@ -1,0 +1,258 @@
+{
+  "resolvedId": "/home/ixcsoft/ssl/front/node_modules/vuetify/lib/locale/he.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export default {\n  badge: 'תג',\n  open: 'Open',\n  close: 'סגור',\n  confirmEdit: {\n    ok: 'OK',\n    cancel: 'Cancel'\n  },\n  dataIterator: {\n    noResultsText: 'לא נמצאו תוצאות מתאימות',\n    loadingText: 'טוען פריט...'\n  },\n  dataTable: {\n    itemsPerPageText: 'שורות לעמוד:',\n    ariaLabel: {\n      sortDescending: 'ממוין לפי סדר עולה. לחץ להספקת המיון.',\n      sortAscending: 'ממוין לפי סדר יורד. לחץ למיון לפי סדר עולה.',\n      sortNone: 'לא ממוין. לחץ למיון לפי סדר עולה.',\n      activateNone: 'הפעל להסרת המיון.',\n      activateDescending: 'הפעל למיון יורד.',\n      activateAscending: 'הפעל למיון עולה.'\n    },\n    sortBy: 'סדר לפי'\n  },\n  dataFooter: {\n    itemsPerPageText: 'פריטים לדף:',\n    itemsPerPageAll: 'הכל',\n    nextPage: 'עמוד הבא',\n    prevPage: 'עמוד הקודם',\n    firstPage: 'עמוד ראשון',\n    lastPage: 'עמוד אחרון',\n    pageText: '{0}-{1} מתוך {2}'\n  },\n  dateRangeInput: {\n    divider: 'to'\n  },\n  datePicker: {\n    itemsSelected: '{0} selected',\n    range: {\n      title: 'Select dates',\n      header: 'Enter dates'\n    },\n    title: 'Select date',\n    header: 'Enter date',\n    input: {\n      placeholder: 'Enter date'\n    }\n  },\n  noDataText: 'אין נתונים זמינים',\n  carousel: {\n    prev: 'מצג קודם',\n    next: 'מצג הבא',\n    ariaLabel: {\n      delimiter: 'Carousel slide {0} of {1}'\n    }\n  },\n  calendar: {\n    moreEvents: '{0} נוספים'\n  },\n  input: {\n    clear: 'Clear {0}',\n    prependAction: '{0} prepended action',\n    appendAction: '{0} appended action',\n    otp: 'Please enter OTP character {0}'\n  },\n  fileInput: {\n    counter: '{0} קבצים',\n    counterSize: '{0} קבצים ({1} בסך הכל)'\n  },\n  timePicker: {\n    am: 'AM',\n    pm: 'PM'\n  },\n  pagination: {\n    ariaLabel: {\n      root: 'ניווט עימוד',\n      next: 'עמוד הבא',\n      previous: 'עמוד הקודם',\n      page: '{0} לך לעמוד',\n      currentPage: '{0} עמוד נוכחי, עמוד',\n      first: 'First page',\n      last: 'Last page'\n    }\n  },\n  stepper: {\n    next: 'Next',\n    prev: 'Previous'\n  },\n  rating: {\n    ariaLabel: {\n      item: 'Rating {0} of {1}'\n    }\n  },\n  loading: 'Loading...',\n  infiniteScroll: {\n    loadMore: 'Load more',\n    empty: 'No more'\n  }\n};\n//# sourceMappingURL=he.mjs.map",
+      "start": 1700759162136,
+      "end": 1700759162181,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162181,
+      "end": 1700759162181,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759162181,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759162181,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-template",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759162182,
+      "end": 1700759162182,
+      "order": "normal"
+    }
+  ]
+}

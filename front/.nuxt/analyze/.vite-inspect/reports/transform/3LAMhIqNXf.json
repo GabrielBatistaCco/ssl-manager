@@ -1,0 +1,218 @@
+{
+  "resolvedId": "virtual:nuxt:/home/ixcsoft/ssl/front/.nuxt/templates.plugin.ddb0d080.mts",
+  "transforms": [
+    {
+      "name": "virtual",
+      "result": "import { defineNuxtPlugin } from '#app'\nimport { createVuetify } from 'vuetify'\n\nconst isDev = process.env.NODE_ENV === \"development\"\nconst options = JSON.parse('{\"ssr\":true,\"treeshaking\":true,\"useVuetifyLabs\":true,\"theme\":{\"defaultTheme\":\"temaCustomizado\",\"themes\":{\"temaCustomizado\":{\"dark\":true,\"colors\":{\"background\":\"#660000\",\"surface\":\"#FFFFFF\",\"primary\":\"#6200EE\",\"primary-darken-1\":\"#3700B3\",\"secondary\":\"#03DAC6\",\"secondary-darken-1\":\"#018786\",\"error\":\"#B00020\",\"info\":\"#2196F3\",\"success\":\"#4CAF50\",\"warning\":\"#FB8C00\"}}}}}')\n\n''\n\nexport default defineNuxtPlugin(nuxtApp => {\n  const vuetify = createVuetify(options)\n  nuxtApp.vueApp.use(vuetify)\n\n  if (!process.server && isDev) {\n    // eslint-disable-next-line no-console\n    console.log('💚 Initialized Vuetify 3', vuetify)\n  }\n\n  return {\n    provide: {\n      vuetify\n    }\n  }\n})\n",
+      "start": 1700759152254,
+      "end": 1700759152254,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759152254,
+      "end": 1700759152254,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759152254,
+      "end": 1700759152254,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759152255,
+      "end": 1700759152255,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759152255,
+      "end": 1700759152255,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759152255,
+      "end": 1700759152255,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759152255,
+      "end": 1700759152255,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759152255,
+      "end": 1700759152255,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1700759152255,
+      "end": 1700759152256,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759152256,
+      "end": 1700759152256,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759152256,
+      "end": 1700759152256,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759152256,
+      "end": 1700759152256,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1700759152256,
+      "end": 1700759152256,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "start": 1700759152256,
+      "end": 1700759152256,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759152257,
+      "end": 1700759152257,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759152257,
+      "end": 1700759152257,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759152257,
+      "end": 1700759152257,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "result": "import { defineNuxtPlugin } from '#app'\nimport { createVuetify } from 'vuetify'\n\nconst isDev = \"production\" === \"development\"\nconst options = JSON.parse('{\"ssr\":true,\"treeshaking\":true,\"useVuetifyLabs\":true,\"theme\":{\"defaultTheme\":\"temaCustomizado\",\"themes\":{\"temaCustomizado\":{\"dark\":true,\"colors\":{\"background\":\"#660000\",\"surface\":\"#FFFFFF\",\"primary\":\"#6200EE\",\"primary-darken-1\":\"#3700B3\",\"secondary\":\"#03DAC6\",\"secondary-darken-1\":\"#018786\",\"error\":\"#B00020\",\"info\":\"#2196F3\",\"success\":\"#4CAF50\",\"warning\":\"#FB8C00\"}}}}}')\n\n''\n\nexport default defineNuxtPlugin(nuxtApp => {\n  const vuetify = createVuetify(options)\n  nuxtApp.vueApp.use(vuetify)\n\n  if (!false && isDev) {\n    // eslint-disable-next-line no-console\n    console.log('💚 Initialized Vuetify 3', vuetify)\n  }\n\n  return {\n    provide: {\n      vuetify\n    }\n  }\n})\n",
+      "start": 1700759152257,
+      "end": 1700759152258,
+      "order": "normal",
+      "sourcemaps": null
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759152258,
+      "end": 1700759152258,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759152259,
+      "end": 1700759152259,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759152259,
+      "end": 1700759152260,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759152260,
+      "end": 1700759152260,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759152260,
+      "end": 1700759152260,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1700759152263,
+      "end": 1700759152263,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1700759152263,
+      "end": 1700759152263,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759152263,
+      "end": 1700759152263,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759152264,
+      "end": 1700759152264,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759152264,
+      "end": 1700759152264,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759152265,
+      "end": 1700759152265,
+      "order": "normal"
+    }
+  ]
+}

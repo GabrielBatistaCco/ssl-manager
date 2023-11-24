@@ -1,0 +1,216 @@
+{
+  "resolvedId": "/home/ixcsoft/ssl/front/node_modules/vuetify/lib/locale/ro.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export default {\n  badge: 'Insignă',\n  open: 'Open',\n  close: 'Închideți',\n  confirmEdit: {\n    ok: 'OK',\n    cancel: 'Anulează'\n  },\n  dataIterator: {\n    noResultsText: 'Nu s-au găsit înregistrări corespunzătoare',\n    loadingText: 'Se încarcă articolele...'\n  },\n  dataTable: {\n    itemsPerPageText: 'Rânduri pe pagină:',\n    ariaLabel: {\n      sortDescending: 'Sortate descendent.',\n      sortAscending: 'Sortate ascendent.',\n      sortNone: 'Nesortate.',\n      activateNone: 'Activați pentru a elimina sortarea.',\n      activateDescending: 'Activați pentru a sorta descendent.',\n      activateAscending: 'Activați pentru a sorta ascendent.'\n    },\n    sortBy: 'Sortați după'\n  },\n  dataFooter: {\n    itemsPerPageText: 'Articole pe pagină:',\n    itemsPerPageAll: 'Toate',\n    nextPage: 'Pagina următoare',\n    prevPage: 'Pagina anterioară',\n    firstPage: 'Prima pagină',\n    lastPage: 'Ultima pagină',\n    pageText: '{0}-{1} din {2}'\n  },\n  dateRangeInput: {\n    divider: 'până la'\n  },\n  datePicker: {\n    itemsSelected: '{0} selected',\n    range: {\n      title: 'Selectați datele',\n      header: 'Introduceți datele'\n    },\n    title: 'Selectați data',\n    header: 'Introduceți data',\n    input: {\n      placeholder: 'Introduceți data'\n    }\n  },\n  noDataText: 'Nu există date disponibile',\n  carousel: {\n    prev: 'Vizualul anterior',\n    next: 'Vizualul următor',\n    ariaLabel: {\n      delimiter: 'Slide carusel {0} din {1}'\n    }\n  },\n  calendar: {\n    moreEvents: 'încă {0}'\n  },\n  input: {\n    clear: 'Șterge {0}',\n    prependAction: '{0} acțiune de inserare la început',\n    appendAction: '{0} acțiune de inserare la sfârșit',\n    otp: 'Please enter OTP character {0}'\n  },\n  fileInput: {\n    counter: '{0} fișiere',\n    counterSize: '{0} fișiere ({1} în total)'\n  },\n  timePicker: {\n    am: 'AM',\n    pm: 'PM'\n  },\n  pagination: {\n    ariaLabel: {\n      root: 'Navigare prin pagini',\n      next: 'Pagina următoare',\n      previous: 'Pagina anterioară',\n      page: 'Mergeți la pagina {0}',\n      currentPage: 'Pagina curentă, pagina {0}',\n      first: 'Prima pagină',\n      last: 'Ultima pagină'\n    }\n  },\n  stepper: {\n    next: 'Next',\n    prev: 'Previous'\n  },\n  rating: {\n    ariaLabel: {\n      item: 'Rating de {0} din {1}'\n    }\n  },\n  loading: 'Se încarcă...',\n  infiniteScroll: {\n    loadMore: 'Încarcă mai multe',\n    empty: 'Nu mai există'\n  }\n};\n//# sourceMappingURL=ro.mjs.map",
+      "start": 1700759155109,
+      "end": 1700759155153,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759155153,
+      "end": 1700759155153,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759155153,
+      "end": 1700759155154,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759155154,
+      "end": 1700759155154,
+      "order": "normal"
+    }
+  ]
+}
