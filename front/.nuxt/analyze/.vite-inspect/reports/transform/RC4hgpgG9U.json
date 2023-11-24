@@ -1,0 +1,216 @@
+{
+  "resolvedId": "/home/ixcsoft/ssl/front/node_modules/vuetify/lib/locale/de.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export default {\n  badge: 'Abzeichen',\n  open: 'Öffnen',\n  close: 'Schließen',\n  confirmEdit: {\n    ok: 'OK',\n    cancel: 'Abbrechen'\n  },\n  dataIterator: {\n    noResultsText: 'Keine Elemente gefunden',\n    loadingText: 'Lade Elemente...'\n  },\n  dataTable: {\n    itemsPerPageText: 'Zeilen pro Seite:',\n    ariaLabel: {\n      sortDescending: 'Absteigend sortiert.',\n      sortAscending: 'Aufsteigend sortiert.',\n      sortNone: 'Nicht sortiert.',\n      activateNone: 'Aktivieren um Sortierung zu entfernen.',\n      activateDescending: 'Aktivieren um absteigend zu sortieren.',\n      activateAscending: 'Aktivieren um aufsteigend zu sortieren.'\n    },\n    sortBy: 'Sortiere nach'\n  },\n  dataFooter: {\n    itemsPerPageText: 'Elemente pro Seite:',\n    itemsPerPageAll: 'Alle',\n    nextPage: 'Nächste Seite',\n    prevPage: 'Vorherige Seite',\n    firstPage: 'Erste Seite',\n    lastPage: 'Letzte Seite',\n    pageText: '{0}-{1} von {2}'\n  },\n  dateRangeInput: {\n    divider: 'bis'\n  },\n  datePicker: {\n    itemsSelected: '{0} selected',\n    range: {\n      title: 'Daten auswählen',\n      header: 'Daten eingeben'\n    },\n    title: 'Datum auswählen',\n    header: 'Datum eingeben',\n    input: {\n      placeholder: 'Datum eingeben'\n    }\n  },\n  noDataText: 'Keine Daten vorhanden',\n  carousel: {\n    prev: 'Vorheriges Bild',\n    next: 'Nächstes Bild',\n    ariaLabel: {\n      delimiter: 'Element {0} von {1}'\n    }\n  },\n  calendar: {\n    moreEvents: '{0} mehr'\n  },\n  input: {\n    clear: '{0} leeren',\n    prependAction: '{0} vorangestellte Aktion',\n    appendAction: '{0} angehängte Aktion',\n    otp: 'Bitte OTP-Zeichen {0} eingeben'\n  },\n  fileInput: {\n    counter: '{0} Dateien',\n    counterSize: '{0} Dateien ({1} gesamt)'\n  },\n  timePicker: {\n    am: 'AM',\n    pm: 'PM'\n  },\n  pagination: {\n    ariaLabel: {\n      root: 'Seitennavigation',\n      next: 'Nächste Seite',\n      previous: 'Vorherige Seite',\n      page: 'Gehe zu Seite {0}',\n      currentPage: 'Aktuelle Seite, Seite {0}',\n      first: 'Erste Seite',\n      last: 'Letzte Seite'\n    }\n  },\n  stepper: {\n    next: 'Weiter',\n    prev: 'Zurück'\n  },\n  rating: {\n    ariaLabel: {\n      item: 'Bewertung {0} von {1}'\n    }\n  },\n  loading: 'Laden...',\n  infiniteScroll: {\n    loadMore: 'Mehr laden',\n    empty: 'Nichts weiteres'\n  }\n};\n//# sourceMappingURL=de.mjs.map",
+      "start": 1700759155013,
+      "end": 1700759155102,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759155103,
+      "end": 1700759155103,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759155103,
+      "end": 1700759155103,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759155103,
+      "end": 1700759155104,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759155104,
+      "end": 1700759155104,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759155104,
+      "end": 1700759155104,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759155104,
+      "end": 1700759155104,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759155104,
+      "end": 1700759155104,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1700759155104,
+      "end": 1700759155104,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759155104,
+      "end": 1700759155104,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759155104,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1700759155105,
+      "end": 1700759155105,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759155105,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759155106,
+      "end": 1700759155106,
+      "order": "normal"
+    }
+  ]
+}

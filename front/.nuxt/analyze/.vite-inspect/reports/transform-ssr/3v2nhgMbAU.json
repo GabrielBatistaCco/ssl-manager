@@ -1,0 +1,258 @@
+{
+  "resolvedId": "/home/ixcsoft/ssl/front/node_modules/vuetify/lib/locale/sl.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export default {\n  badge: 'Značka',\n  open: 'Open',\n  close: 'Zapri',\n  confirmEdit: {\n    ok: 'OK',\n    cancel: 'Cancel'\n  },\n  dataIterator: {\n    noResultsText: 'Ni iskanega zapisa',\n    loadingText: 'Nalaganje...'\n  },\n  dataTable: {\n    itemsPerPageText: 'Vrstic na stran:',\n    ariaLabel: {\n      sortDescending: 'Razvrščeno padajoče.',\n      sortAscending: 'Razvrščeno naraščajoče.',\n      sortNone: 'Ni razvrščeno.',\n      activateNone: 'Aktivirajte za odstranitev razvrščanja.',\n      activateDescending: 'Aktivirajte za padajoče razvrščanje.',\n      activateAscending: 'Aktivirajte za naraščajoče razvrščanje.'\n    },\n    sortBy: 'Razvrsti po'\n  },\n  dataFooter: {\n    itemsPerPageText: 'Predmetov na stran:',\n    itemsPerPageAll: 'Vse',\n    nextPage: 'Naslednja stran',\n    prevPage: 'Prejšnja stran',\n    firstPage: 'Prva stran',\n    lastPage: 'Zadnja stran',\n    pageText: '{0}-{1} od {2}'\n  },\n  dateRangeInput: {\n    divider: 'to'\n  },\n  datePicker: {\n    itemsSelected: '{0} selected',\n    range: {\n      title: 'Select dates',\n      header: 'Enter dates'\n    },\n    title: 'Select date',\n    header: 'Enter date',\n    input: {\n      placeholder: 'Enter date'\n    }\n  },\n  noDataText: 'Ni podatkov',\n  carousel: {\n    prev: 'Prejšnji prikaz',\n    next: 'Naslednji prikaz',\n    ariaLabel: {\n      delimiter: 'Carousel slide {0} of {1}'\n    }\n  },\n  calendar: {\n    moreEvents: 'Še {0}'\n  },\n  input: {\n    clear: 'Clear {0}',\n    prependAction: '{0} prepended action',\n    appendAction: '{0} appended action',\n    otp: 'Please enter OTP character {0}'\n  },\n  fileInput: {\n    counter: '{0} datotek',\n    counterSize: '{0} datotek ({1} skupno)'\n  },\n  timePicker: {\n    am: 'AM',\n    pm: 'PM'\n  },\n  pagination: {\n    ariaLabel: {\n      root: 'Navigacija po strani po strani',\n      next: 'Naslednja stran',\n      previous: 'Prejšnja stran',\n      page: 'Pojdi na stran {0}',\n      currentPage: 'Trenutna stran, stran {0}',\n      first: 'First page',\n      last: 'Last page'\n    }\n  },\n  stepper: {\n    next: 'Next',\n    prev: 'Previous'\n  },\n  rating: {\n    ariaLabel: {\n      item: 'Rating {0} of {1}'\n    }\n  },\n  loading: 'Loading...',\n  infiniteScroll: {\n    loadMore: 'Load more',\n    empty: 'No more'\n  }\n};\n//# sourceMappingURL=sl.mjs.map",
+      "start": 1700759162169,
+      "end": 1700759162205,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759162205,
+      "end": 1700759162205,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759162205,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759162205,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-template",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759162206,
+      "end": 1700759162206,
+      "order": "normal"
+    }
+  ]
+}

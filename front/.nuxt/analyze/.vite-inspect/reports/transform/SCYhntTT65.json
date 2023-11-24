@@ -1,0 +1,216 @@
+{
+  "resolvedId": "/home/ixcsoft/ssl/front/node_modules/vuetify/lib/locale/ko.mjs",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "export default {\n  badge: '배지',\n  open: 'Open',\n  close: '닫기',\n  confirmEdit: {\n    ok: 'OK',\n    cancel: 'Cancel'\n  },\n  dataIterator: {\n    noResultsText: '일치하는 항목이 없습니다.',\n    loadingText: '불러오는 중...'\n  },\n  dataTable: {\n    itemsPerPageText: '페이지 당 행 수:',\n    ariaLabel: {\n      sortDescending: '내림차순 정렬.',\n      sortAscending: '오름차순 정렬.',\n      sortNone: '정렬하지 않음.',\n      activateNone: '정렬을 취소하려면 활성화하세요.',\n      activateDescending: '내림차순 정렬을 위해 활성화하세요.',\n      activateAscending: '오름차순 정렬을 위해 활성화하세요.'\n    },\n    sortBy: 'Sort by'\n  },\n  dataFooter: {\n    itemsPerPageText: '페이지 당 항목 수:',\n    itemsPerPageAll: '전체',\n    nextPage: '다음 페이지',\n    prevPage: '이전 페이지',\n    firstPage: '첫 페이지',\n    lastPage: '마지막 페이지',\n    pageText: '{2} 중 {0}-{1}'\n  },\n  dateRangeInput: {\n    divider: 'to'\n  },\n  datePicker: {\n    itemsSelected: '{0} selected',\n    range: {\n      title: 'Select dates',\n      header: 'Enter dates'\n    },\n    title: 'Select date',\n    header: 'Enter date',\n    input: {\n      placeholder: 'Enter date'\n    }\n  },\n  noDataText: '데이터가 없습니다.',\n  carousel: {\n    prev: '이전 화면',\n    next: '다음 화면',\n    ariaLabel: {\n      delimiter: 'Carousel slide {0} of {1}'\n    }\n  },\n  calendar: {\n    moreEvents: '{0} 더보기'\n  },\n  input: {\n    clear: 'Clear {0}',\n    prependAction: '{0} prepended action',\n    appendAction: '{0} appended action',\n    otp: 'Please enter OTP character {0}'\n  },\n  fileInput: {\n    counter: '{0} files',\n    counterSize: '{0} files ({1} in total)'\n  },\n  timePicker: {\n    am: '오전',\n    pm: '오후'\n  },\n  pagination: {\n    ariaLabel: {\n      root: 'Pagination Navigation',\n      next: '다음 페이지',\n      previous: '이전 페이지',\n      page: '고토 페이지 {0}',\n      currentPage: '현재 페이지, 페이지 {0}',\n      first: 'First page',\n      last: 'Last page'\n    }\n  },\n  stepper: {\n    next: 'Next',\n    prev: 'Previous'\n  },\n  rating: {\n    ariaLabel: {\n      item: 'Rating {0} of {1}'\n    }\n  },\n  loading: 'Loading...',\n  infiniteScroll: {\n    loadMore: 'Load more',\n    empty: 'No more'\n  }\n};\n//# sourceMappingURL=ko.mjs.map",
+      "start": 1700759155087,
+      "end": 1700759155137,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759155138,
+      "end": 1700759155138,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759155138,
+      "end": 1700759155138,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759155139,
+      "end": 1700759155139,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759155139,
+      "end": 1700759155139,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759155139,
+      "end": 1700759155139,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759155139,
+      "end": 1700759155139,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759155139,
+      "end": 1700759155139,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1700759155139,
+      "end": 1700759155139,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759155140,
+      "end": 1700759155140,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759155140,
+      "end": 1700759155140,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759155140,
+      "end": 1700759155140,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1700759155140,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759155141,
+      "end": 1700759155141,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759155141,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759155142,
+      "end": 1700759155142,
+      "order": "normal"
+    }
+  ]
+}

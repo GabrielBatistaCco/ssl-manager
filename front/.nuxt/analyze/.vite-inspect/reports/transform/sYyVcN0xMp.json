@@ -1,0 +1,231 @@
+{
+  "resolvedId": "/home/ixcsoft/ssl/front/pages/ssl/[id].vue?macro=true",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<template>\n  <v-container>\n    <v-row no-gutters class=\"py-10 justify-center\">\n      <v-col cols=\"6\">\n        <h1 class=\"text-center pb-5\">Cadastro de certificados</h1>\n      </v-col>\n      <v-col cols=\"8\">\n        <v-form v-model=\"valid\">\n          <v-row no-gutters>\n            <v-col :v-if=\"certificado.id\" cols=\"12\">\n              <v-text-field \n                v-model=\"certificado.id\" v-value=\"certificado.id\" disabled=\"\" placeholder=\"ID\"\n                label=\"ID\" />\n            </v-col>\n          </v-row>\n          <v-row no-gutters>\n            <v-col cols=\"12\">\n              <v-text-field v-model=\"certificado.dominio\" v-value=\"certificado.dominio\" placeholder=\"Domínio\"\n                label=\"Domínio\" />\n            </v-col>\n          </v-row>\n          <v-row no-gutters>\n            <v-col cols=\"12\">\n              <v-text-field v-model=\"certificado.url_ssls\" v-value=\"certificado.url_ssls\" placeholder=\"Url ssls\"\n                label=\"Url ssls\" />\n            </v-col>\n          </v-row>\n          <v-row>\n            <v-col>\n              <v-btn class=\"mr-2\" color=\"error\" outlined to=\"/ssl\">\n                Cancelar\n              </v-btn>\n              <v-btn color=\"success\" outlined @click=\"persistir\">\n                Salvar\n              </v-btn>\n            </v-col>\n          </v-row>\n        </v-form>\n      </v-col>\n    </v-row>\n  </v-container>\n</template>\n\n\n<script>\nimport axios from 'axios';\nexport default {\n  layout: 'default',\n  name: 'CadastroCertificadosPage',\n  data() {\n    return {\n      certificado: {\n        id: null,\n        dominio: null,\n        url_ssls: null,\n      }\n    }\n  },\n\n  mounted() {\n    if (this.$route?.params?.id) {\n      this.getCertificado(this.$route.params.id);\n    }\n  },\n\n  methods: {\n    async persistir() {\n      try {\n        let certificado = { \n          dominio: this.certificado.dominio,\n          url_ssls: this.certificado.url_ssls,\n        };\n        if (!this.certificado.id) {\n          let response = await axios.post('http://localhost:8000/certificados/', certificado);\n\n          response = response.data.dominio\n          this.$router.push('/ssl')\n\n        } else {\n            certificado.id = this.certificado.id\n            await axios.put(`http://localhost:8000/certificados/${certificado.id}/`, certificado);\n            return this.$router.push('/ssl');\n        }\n      } catch (error) {\n        console.log(\"Deu erro\")\n        console.log(error) \n        // this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)\n      }\n    },\n    async getCertificado (id) {\n      console.log(id)\n      try {\n        let certificado = await axios.get(`http://localhost:8000/certificados/${id}/`);\n        this.certificado = certificado.data\n      } catch (error) {\n        console.log(error)\n      }\n    }\n  }\n}\n</script>",
+      "start": 1700759152569,
+      "end": 1700759152965,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1700759152966,
+      "end": 1700759152966,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "\nimport axios from 'axios';\nconst _sfc_main = {\n  layout: 'default',\n  name: 'CadastroCertificadosPage',\n  data() {\n    return {\n      certificado: {\n        id: null,\n        dominio: null,\n        url_ssls: null,\n      }\n    }\n  },\n\n  mounted() {\n    if (this.$route?.params?.id) {\n      this.getCertificado(this.$route.params.id);\n    }\n  },\n\n  methods: {\n    async persistir() {\n      try {\n        let certificado = { \n          dominio: this.certificado.dominio,\n          url_ssls: this.certificado.url_ssls,\n        };\n        if (!this.certificado.id) {\n          let response = await axios.post('http://localhost:8000/certificados/', certificado);\n\n          response = response.data.dominio\n          this.$router.push('/ssl')\n\n        } else {\n            certificado.id = this.certificado.id\n            await axios.put(`http://localhost:8000/certificados/${certificado.id}/`, certificado);\n            return this.$router.push('/ssl');\n        }\n      } catch (error) {\n        console.log(\"Deu erro\")\n        console.log(error) \n        // this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)\n      }\n    },\n    async getCertificado (id) {\n      console.log(id)\n      try {\n        let certificado = await axios.get(`http://localhost:8000/certificados/${id}/`);\n        this.certificado = certificado.data\n      } catch (error) {\n        console.log(error)\n      }\n    }\n  }\n}\n\nimport { createElementVNode as _createElementVNode, resolveComponent as _resolveComponent, withCtx as _withCtx, createVNode as _createVNode, resolveDirective as _resolveDirective, withDirectives as _withDirectives, createTextVNode as _createTextVNode, openBlock as _openBlock, createBlock as _createBlock } from \"vue\"\n\nconst _hoisted_1 = /*#__PURE__*/_createElementVNode(\"h1\", { class: \"text-center pb-5\" }, \"Cadastro de certificados\", -1)\n\nfunction _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {\n  const _component_v_col = _resolveComponent(\"v-col\")\n  const _component_v_text_field = _resolveComponent(\"v-text-field\")\n  const _component_v_row = _resolveComponent(\"v-row\")\n  const _component_v_btn = _resolveComponent(\"v-btn\")\n  const _component_v_form = _resolveComponent(\"v-form\")\n  const _component_v_container = _resolveComponent(\"v-container\")\n  const _directive_value = _resolveDirective(\"value\")\n\n  return (_openBlock(), _createBlock(_component_v_container, null, {\n    default: _withCtx(() => [\n      _createVNode(_component_v_row, {\n        \"no-gutters\": \"\",\n        class: \"py-10 justify-center\"\n      }, {\n        default: _withCtx(() => [\n          _createVNode(_component_v_col, { cols: \"6\" }, {\n            default: _withCtx(() => [\n              _hoisted_1\n            ]),\n            _: 1\n          }),\n          _createVNode(_component_v_col, { cols: \"8\" }, {\n            default: _withCtx(() => [\n              _createVNode(_component_v_form, {\n                modelValue: _ctx.valid,\n                \"onUpdate:modelValue\": _cache[3] || (_cache[3] = $event => ((_ctx.valid) = $event))\n              }, {\n                default: _withCtx(() => [\n                  _createVNode(_component_v_row, { \"no-gutters\": \"\" }, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, {\n                        \"v-if\": $data.certificado.id,\n                        cols: \"12\"\n                      }, {\n                        default: _withCtx(() => [\n                          _withDirectives(_createVNode(_component_v_text_field, {\n                            modelValue: $data.certificado.id,\n                            \"onUpdate:modelValue\": _cache[0] || (_cache[0] = $event => (($data.certificado.id) = $event)),\n                            disabled: \"\",\n                            placeholder: \"ID\",\n                            label: \"ID\"\n                          }, null, 8, [\"modelValue\"]), [\n                            [_directive_value, $data.certificado.id]\n                          ])\n                        ]),\n                        _: 1\n                      }, 8, [\"v-if\"])\n                    ]),\n                    _: 1\n                  }),\n                  _createVNode(_component_v_row, { \"no-gutters\": \"\" }, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, { cols: \"12\" }, {\n                        default: _withCtx(() => [\n                          _withDirectives(_createVNode(_component_v_text_field, {\n                            modelValue: $data.certificado.dominio,\n                            \"onUpdate:modelValue\": _cache[1] || (_cache[1] = $event => (($data.certificado.dominio) = $event)),\n                            placeholder: \"Domínio\",\n                            label: \"Domínio\"\n                          }, null, 8, [\"modelValue\"]), [\n                            [_directive_value, $data.certificado.dominio]\n                          ])\n                        ]),\n                        _: 1\n                      })\n                    ]),\n                    _: 1\n                  }),\n                  _createVNode(_component_v_row, { \"no-gutters\": \"\" }, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, { cols: \"12\" }, {\n                        default: _withCtx(() => [\n                          _withDirectives(_createVNode(_component_v_text_field, {\n                            modelValue: $data.certificado.url_ssls,\n                            \"onUpdate:modelValue\": _cache[2] || (_cache[2] = $event => (($data.certificado.url_ssls) = $event)),\n                            placeholder: \"Url ssls\",\n                            label: \"Url ssls\"\n                          }, null, 8, [\"modelValue\"]), [\n                            [_directive_value, $data.certificado.url_ssls]\n                          ])\n                        ]),\n                        _: 1\n                      })\n                    ]),\n                    _: 1\n                  }),\n                  _createVNode(_component_v_row, null, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, null, {\n                        default: _withCtx(() => [\n                          _createVNode(_component_v_btn, {\n                            class: \"mr-2\",\n                            color: \"error\",\n                            outlined: \"\",\n                            to: \"/ssl\"\n                          }, {\n                            default: _withCtx(() => [\n                              _createTextVNode(\" Cancelar \")\n                            ]),\n                            _: 1\n                          }),\n                          _createVNode(_component_v_btn, {\n                            color: \"success\",\n                            outlined: \"\",\n                            onClick: $options.persistir\n                          }, {\n                            default: _withCtx(() => [\n                              _createTextVNode(\" Salvar \")\n                            ]),\n                            _: 1\n                          }, 8, [\"onClick\"])\n                        ]),\n                        _: 1\n                      })\n                    ]),\n                    _: 1\n                  })\n                ]),\n                _: 1\n              }, 8, [\"modelValue\"])\n            ]),\n            _: 1\n          })\n        ]),\n        _: 1\n      })\n    ]),\n    _: 1\n  }))\n}\n\n\nimport _export_sfc from '\u0000plugin-vue:export-helper'\nexport default /*#__PURE__*/_export_sfc(_sfc_main, [['render',_sfc_render]])",
+      "start": 1700759152966,
+      "end": 1700759152985,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1700759152985,
+      "end": 1700759152985,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759152985,
+      "end": 1700759152985,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1700759152985,
+      "end": 1700759152985,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1700759152985,
+      "end": 1700759152985,
+      "order": "normal"
+    },
+    {
+      "name": "vuetify:import",
+      "result": "\nimport axios from 'axios';\nconst _sfc_main = {\n  layout: 'default',\n  name: 'CadastroCertificadosPage',\n  data() {\n    return {\n      certificado: {\n        id: null,\n        dominio: null,\n        url_ssls: null,\n      }\n    }\n  },\n\n  mounted() {\n    if (this.$route?.params?.id) {\n      this.getCertificado(this.$route.params.id);\n    }\n  },\n\n  methods: {\n    async persistir() {\n      try {\n        let certificado = { \n          dominio: this.certificado.dominio,\n          url_ssls: this.certificado.url_ssls,\n        };\n        if (!this.certificado.id) {\n          let response = await axios.post('http://localhost:8000/certificados/', certificado);\n\n          response = response.data.dominio\n          this.$router.push('/ssl')\n\n        } else {\n            certificado.id = this.certificado.id\n            await axios.put(`http://localhost:8000/certificados/${certificado.id}/`, certificado);\n            return this.$router.push('/ssl');\n        }\n      } catch (error) {\n        console.log(\"Deu erro\")\n        console.log(error) \n        // this.$toast.error(`Ocorreu um erro no cadastro, contate o administrador`)\n      }\n    },\n    async getCertificado (id) {\n      console.log(id)\n      try {\n        let certificado = await axios.get(`http://localhost:8000/certificados/${id}/`);\n        this.certificado = certificado.data\n      } catch (error) {\n        console.log(error)\n      }\n    }\n  }\n}\n\nimport { createElementVNode as _createElementVNode, resolveComponent as _resolveComponent, withCtx as _withCtx, createVNode as _createVNode, resolveDirective as _resolveDirective, withDirectives as _withDirectives, createTextVNode as _createTextVNode, openBlock as _openBlock, createBlock as _createBlock } from \"vue\"\n\nconst _hoisted_1 = /*#__PURE__*/_createElementVNode(\"h1\", { class: \"text-center pb-5\" }, \"Cadastro de certificados\", -1)\n\nfunction _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {\n                                                     \n                                                                   \n                                                     \n                                                     \n                                                       \n                                                                 \n  const _directive_value = _resolveDirective(\"value\")\n\n  return (_openBlock(), _createBlock(_component_v_container, null, {\n    default: _withCtx(() => [\n      _createVNode(_component_v_row, {\n        \"no-gutters\": \"\",\n        class: \"py-10 justify-center\"\n      }, {\n        default: _withCtx(() => [\n          _createVNode(_component_v_col, { cols: \"6\" }, {\n            default: _withCtx(() => [\n              _hoisted_1\n            ]),\n            _: 1\n          }),\n          _createVNode(_component_v_col, { cols: \"8\" }, {\n            default: _withCtx(() => [\n              _createVNode(_component_v_form, {\n                modelValue: _ctx.valid,\n                \"onUpdate:modelValue\": _cache[3] || (_cache[3] = $event => ((_ctx.valid) = $event))\n              }, {\n                default: _withCtx(() => [\n                  _createVNode(_component_v_row, { \"no-gutters\": \"\" }, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, {\n                        \"v-if\": $data.certificado.id,\n                        cols: \"12\"\n                      }, {\n                        default: _withCtx(() => [\n                          _withDirectives(_createVNode(_component_v_text_field, {\n                            modelValue: $data.certificado.id,\n                            \"onUpdate:modelValue\": _cache[0] || (_cache[0] = $event => (($data.certificado.id) = $event)),\n                            disabled: \"\",\n                            placeholder: \"ID\",\n                            label: \"ID\"\n                          }, null, 8, [\"modelValue\"]), [\n                            [_directive_value, $data.certificado.id]\n                          ])\n                        ]),\n                        _: 1\n                      }, 8, [\"v-if\"])\n                    ]),\n                    _: 1\n                  }),\n                  _createVNode(_component_v_row, { \"no-gutters\": \"\" }, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, { cols: \"12\" }, {\n                        default: _withCtx(() => [\n                          _withDirectives(_createVNode(_component_v_text_field, {\n                            modelValue: $data.certificado.dominio,\n                            \"onUpdate:modelValue\": _cache[1] || (_cache[1] = $event => (($data.certificado.dominio) = $event)),\n                            placeholder: \"Domínio\",\n                            label: \"Domínio\"\n                          }, null, 8, [\"modelValue\"]), [\n                            [_directive_value, $data.certificado.dominio]\n                          ])\n                        ]),\n                        _: 1\n                      })\n                    ]),\n                    _: 1\n                  }),\n                  _createVNode(_component_v_row, { \"no-gutters\": \"\" }, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, { cols: \"12\" }, {\n                        default: _withCtx(() => [\n                          _withDirectives(_createVNode(_component_v_text_field, {\n                            modelValue: $data.certificado.url_ssls,\n                            \"onUpdate:modelValue\": _cache[2] || (_cache[2] = $event => (($data.certificado.url_ssls) = $event)),\n                            placeholder: \"Url ssls\",\n                            label: \"Url ssls\"\n                          }, null, 8, [\"modelValue\"]), [\n                            [_directive_value, $data.certificado.url_ssls]\n                          ])\n                        ]),\n                        _: 1\n                      })\n                    ]),\n                    _: 1\n                  }),\n                  _createVNode(_component_v_row, null, {\n                    default: _withCtx(() => [\n                      _createVNode(_component_v_col, null, {\n                        default: _withCtx(() => [\n                          _createVNode(_component_v_btn, {\n                            class: \"mr-2\",\n                            color: \"error\",\n                            outlined: \"\",\n                            to: \"/ssl\"\n                          }, {\n                            default: _withCtx(() => [\n                              _createTextVNode(\" Cancelar \")\n                            ]),\n                            _: 1\n                          }),\n                          _createVNode(_component_v_btn, {\n                            color: \"success\",\n                            outlined: \"\",\n                            onClick: $options.persistir\n                          }, {\n                            default: _withCtx(() => [\n                              _createTextVNode(\" Salvar \")\n                            ]),\n                            _: 1\n                          }, 8, [\"onClick\"])\n                        ]),\n                        _: 1\n                      })\n                    ]),\n                    _: 1\n                  })\n                ]),\n                _: 1\n              }, 8, [\"modelValue\"])\n            ]),\n            _: 1\n          })\n        ]),\n        _: 1\n      })\n    ]),\n    _: 1\n  }))\n}\n\n\nimport _export_sfc from '\u0000plugin-vue:export-helper'\nexport default /*#__PURE__*/_export_sfc(_sfc_main, [['render',_sfc_render]])\n\n/* Vuetify */\nimport { VBtn as _component_v_btn } from \"vuetify/lib/components/VBtn/index.mjs\"\nimport { VForm as _component_v_form } from \"vuetify/lib/components/VForm/index.mjs\"\nimport { VCol as _component_v_col, VRow as _component_v_row, VContainer as _component_v_container } from \"vuetify/lib/components/VGrid/index.mjs\"\nimport { VTextField as _component_v_text_field } from \"vuetify/lib/components/VTextField/index.mjs\"\n\n",
+      "start": 1700759152985,
+      "end": 1700759152986,
+      "order": "normal",
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1700759152986,
+      "end": 1700759152986,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1700759152986,
+      "end": 1700759152990,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1700759152990,
+      "end": 1700759152990,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "result": "\nconst __nuxt_page_meta = null\nexport default __nuxt_page_meta\n",
+      "start": 1700759152990,
+      "end": 1700759152991,
+      "order": "post",
+      "sourcemaps": {
+        "version": 3,
+        "sources": [
+          ""
+        ],
+        "names": [],
+        "mappings": "AAAA;AAAA;AAAA;AAAA"
+      }
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1700759152992,
+      "end": 1700759152992,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1700759152992,
+      "end": 1700759152992,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1700759152992,
+      "end": 1700759152992,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1700759152992,
+      "end": 1700759152992,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1700759152992,
+      "end": 1700759152992,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1700759152992,
+      "end": 1700759152992,
+      "order": "normal"
+    }
+  ]
+}
