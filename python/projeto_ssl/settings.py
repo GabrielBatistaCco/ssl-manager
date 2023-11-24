@@ -38,7 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_ssl',
     'rest_framework',
+    'channels',
 ]
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',  # Use 'channels.layers.RedisChannelLayer' para usar o Redis
+    },
+}
+
+APPEND_SLASH = False
 
 CRON_CLASSES = [
     'django_cron.cron.CronJobBase',

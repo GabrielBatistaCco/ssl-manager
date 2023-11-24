@@ -6,7 +6,14 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError, NotFound
 from rest_framework import viewsets, status
 from .serializers import CertSerializer
+from concurrent.futures import ThreadPoolExecutor
+from django.db import transaction
 import pandas as pd
+import re
+
+import asyncio
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 class CertViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
@@ -14,27 +21,29 @@ class CertViewSet(viewsets.ModelViewSet):
 
     def perform_cert_operation(self, serializer, is_update=False):
 
-        form_dominio = serializer.validated_data.get('dominio')
-        form_url_ssls = serializer.validated_data.get('url_ssls')
+        domain_form = serializer.validated_data.get('domain')
+        ssls_url_form = serializer.validated_data.get('ssls_url')
 
-        if not form_dominio and not form_url_ssls:
-            raise ValidationError({'detail': 'Pelo menos um dos campos "Domínio" ou "URL ssls" deve ser preenchido.'})
+        if not domain_form and not ssls_url_form:
+            raise ValidationError({'detail': 'At least one of the fields "Domain" or "SSL URL" must be filled.'})
 
-        get_ssl = GetSSLCert(dominio=form_dominio, url_ssls=form_url_ssls)
+        get_ssl = GetSSLCert(
+            domain=domain_form,
+            ssls_url=ssls_url_form
+        )
 
-        # Valida dominio e url_ssls
-        data_to_validate = {"dominio": get_ssl.dominio, "url_ssls": get_ssl.url_ssls}
+        # Validate domain and ssls_url
+        data_to_validate = {"domain": get_ssl.domain, "ssls_url": get_ssl.ssls_url}
         serializer.validate_data(data_to_validate)
 
         try:
-            # import pdb; pdb.set_trace()
-            dados_certificado = get_ssl.get_certificado(datas=True, status=True)
-            serializer.validated_data.update(dados_certificado)
+            certificate_data = get_ssl.get_certificate(datas=True, status=True)
+            serializer.validated_data.update(certificate_data)
 
             serializer.save()
 
         except Exception as e:
-            return Response({'detail': f'Erro ao obter o certificado: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'detail': f'Error obtaining the certificate: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -60,58 +69,95 @@ class CertViewSet(viewsets.ModelViewSet):
 
         try:
             self.perform_destroy(instance)
-            return Response({'detail': 'Registro excluído com sucesso.'}, status=status.HTTP_200_OK)
+            return Response({'detail': 'Record deleted successfully.'}, status=status.HTTP_200_OK)
         except Cert.DoesNotExist:
-            raise ValidationError({'detail': 'Registro não encontrado.'})
+            raise ValidationError({'detail': 'Record not found.'})
+
 
 class CsvViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
     serializer_class = CertSerializer
 
-    @action(detail=False, methods=['POST'])
-    def importar_csv(self, request):
-        if 'arquivo' not in request.FILES:
-            return Response({'detail': 'O arquivo não foi fornecido.'}, status=status.HTTP_400_BAD_REQUEST)
+    def create(self, request, *args, **kwargs):
 
-        arquivo_csv = request.FILES['arquivo']
+        if 'file' not in request.FILES:
+            return Response({'detail': 'The file was not provided.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        csv_file = request.FILES['file']
 
         try:
-            dados_csv = pd.read_csv(arquivo_csv)
-            dados_filtrados = self.filtrar_dados_csv(dados_csv)
+            csv_data = pd.read_csv(csv_file)
+            filtered_data = self.filter_csv_data(csv_data)
 
-            for index, linha in dados_filtrados.iterrows():
-                self.processar_linha_csv(linha)
+            with ThreadPoolExecutor(max_workers=50) as executor:
+                executor.map(self.process_csv_line, filtered_data.itertuples(index=False))
 
-            return Response({'detail': 'Dados importados com sucesso'}, status=status.HTTP_200_OK)
+            return Response({'detail': f'XXX certificates imported successfully.'}, status=status.HTTP_200_OK)
 
         except pd.errors.EmptyDataError:
-            return Response({'detail': 'O arquivo CSV está vazio'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'The CSV file is empty.'}, status=status.HTTP_400_BAD_REQUEST)
 
         except pd.errors.ParserError:
-            return Response({'detail': 'Erro ao analisar o arquivo CSV'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'The provided file is not a valid CSV file.'}, status=status.HTTP_400_BAD_REQUEST)
 
-    def filtrar_dados_csv(self, dados_csv):
-        return dados_csv[
-            (dados_csv['details_URL'].notna()) &
-            (dados_csv['status'].isin(['ISSUED', 'PAUSED', 'UNUSED'])) &
-            (~dados_csv['common_name'].astype(str).str.startswith('*'))
-        ]
-
-    def processar_linha_csv(self, linha):
-        csv_dominio = linha.get('common_name')
-        csv_url_ssls = linha.get('details_URL')
+    @transaction.atomic
+    def process_csv_line(self, line):
+        csv_domain = line.common_name
+        csv_ssls_url = line.details_URL
+        csv_status_ssl = line.status
 
         get_ssl = GetSSLCert(
-            dominio=csv_dominio,
-            url_ssls=csv_url_ssls
+            domain=csv_domain,
+            ssls_url=csv_ssls_url,
+            status_ssl=status
         )
 
-        dados_certificado = get_ssl.get_certificado(datas=False, status=True)
+        certificate_data = get_ssl.get_certificate(datas=True, status=True)
 
-        csv_cert, index = Cert.objects.get_or_create(dominio=csv_dominio)
+        csv_cert, _ = Cert.objects.get_or_create(ssls_url=form_ssls_url)
 
-        for campo, valor in dados_certificado.items():
-            setattr(csv_cert, campo, valor)
+        for field, value in certificate_data.items():
+            setattr(csv_cert, field, value)
 
-        print(dados_certificado)
         csv_cert.save()
+
+    def filter_csv_data(self, csv_data):
+        return csv_data[
+            (csv_data['details_URL'].notna()) &
+            (csv_data['status'].isin(['ISSUED', 'PAUSED', 'UNUSED'])) &
+            (~csv_data['common_name'].astype(str).str.startswith('*'))
+        ]
+
+
+class RefreshCertsViewSet(viewsets.ModelViewSet):
+    queryset = Cert.objects.all()
+    serializer_class = CertSerializer
+
+    def list(self, request, *args, **kwargs):
+
+        certs_to_refresh = Cert.objects.all()
+        certs_count = certs_to_refresh.count()
+
+        if certs_count == 0:
+            return Response({'detail': 'No certificates to update.'}, status=status.HTTP_404_NOT_FOUND)
+
+        with ThreadPoolExecutor(max_workers=50) as executor:
+            executor.map(self.refresh_certificate, certs_to_refresh)
+
+        return Response({'detail': f'{certs_count} certificates updated successfully.'}, status=status.HTTP_200_OK)
+
+    @transaction.atomic
+    def refresh_certificate(self, cert):
+        try:
+            get_ssl = GetSSLCert(
+                domain=cert.domain,
+                ssls_url=cert.ssls_url
+            )
+
+            certificate_data = get_ssl.get_certificate(datas=True, status=True)
+
+            Cert.objects.filter(pk=cert.pk).update(**certificate_data)
+            print(f'Certificate {cert.domain} updated successfully.')
+
+        except Exception as e:
+            print(f'Error updating certificate {cert.domain}: {e}')
