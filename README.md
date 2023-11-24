@@ -22,7 +22,7 @@ python3 manage.py runserver
 
 Cada etapa do fluxo é uma ramificação no desenvolvimento do software:
 
-<img src="./django/projeto_ssl/Fluxo-entrega.png">
+<img src="django/projeto_ssl/images/release-flow.png">
 
 - **Front-end e Back-end**: Ramificações distintas, pois os desenvolvimentos são isolados, permitindo serem execudados em paralelo com segurança de que um não afatará no outro.
 
