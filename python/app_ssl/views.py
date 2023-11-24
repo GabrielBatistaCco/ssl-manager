@@ -11,10 +11,6 @@ from django.db import transaction
 import pandas as pd
 import re
 
-import asyncio
-from asgiref.sync import async_to_sync
-from channels.layers import get_channel_layer
-
 class CertViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
     serializer_class = CertSerializer
@@ -89,10 +85,12 @@ class CsvViewSet(viewsets.ModelViewSet):
             csv_data = pd.read_csv(csv_file)
             filtered_data = self.filter_csv_data(csv_data)
 
+            certs_count = len(certs_count)
+
             with ThreadPoolExecutor(max_workers=50) as executor:
                 executor.map(self.process_csv_line, filtered_data.itertuples(index=False))
 
-            return Response({'detail': f'XXX certificates imported successfully.'}, status=status.HTTP_200_OK)
+            return Response({'detail': f'{certs_count} certificates imported successfully.'}, status=status.HTTP_200_OK)
 
         except pd.errors.EmptyDataError:
             return Response({'detail': 'The CSV file is empty.'}, status=status.HTTP_400_BAD_REQUEST)
