@@ -92,8 +92,7 @@ export default {
         };
 
         if (!this.certificate.id) {
-          let response = await axios.post('http://localhost:8000/certificates/', certificate);
-          
+          let response = await axios.post(`${import.meta.env.VITE_API_URL}/certificates/`, certificate);
           response = response.data.domain
           toast(`Registro criado com sucesso`, {
             autoClose: 1000,
@@ -105,8 +104,7 @@ export default {
 
         } else {
           certificate.id = this.certificate.id
-          await axios.put(`http://localhost:8000/certificates/${certificate.id}/`, certificate);
-
+          await axios.put(`${import.meta.env.VITE_API_URL}/certificates/${certificate.id}/`, certificate);
           toast(`Registro atualizado com sucesso`, {
             autoClose: 1000,
             position: 'bottom-right',
@@ -138,10 +136,8 @@ export default {
     },
      
     async getCertificate(id) {
-      console.log(id)
       try {
-        let certificate = await axios.get(`http://localhost:8000/certificates/${id}/`);
-        // tratando a data
+        let certificate = await axios.get(`${import.meta.env.VITE_API_URL}/certificates/${id}/`);
         certificate.data.activation_ssl = this.formatDate(certificate.data.activation_ssl)
         certificate.data.expiration_ssl = this.formatDate(certificate.data.expiration_ssl)
 

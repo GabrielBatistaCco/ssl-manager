@@ -59,7 +59,7 @@ export default {
   methods: {
     async getCertificates() {
       try {
-        this.certificates = (await axios.get(`http://localhost:8000/certificates/`)).data;
+        this.certificates = (await axios.get(`${import.meta.env.VITE_API_URL}/certificates/`)).data;
       } catch (error) {
         toast(`Ocorreu um erro ao carregar a pagina, contate o administrador`, {
           autoClose: 1000,
@@ -72,7 +72,7 @@ export default {
     async destroy(certificate) {
       try {
         if (confirm(`Deseja deletar ${certificate.domain}?`)) {
-          await axios.delete(`http://localhost:8000/certificates/${certificate.id}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/certificates/${certificate.id}`);
           toast(`Registro deletado com sucesso`, {
             autoClose: 1000,
             position: 'bottom-right',
