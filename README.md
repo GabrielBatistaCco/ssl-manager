@@ -1,8 +1,10 @@
-# Instalação e execução
+# Backend
+## Instalação e execução
 
 ```
 apt install python3 -y
-pip3 install django djangorestframework pandas pyOpenSSL
+pip3 install django djangorestframework pandas pyOpenSSL django-cors-headers
+
 ```
 
 ```
@@ -16,6 +18,12 @@ python3 manage.py migrate
 
 # Executar server
 python3 manage.py runserver
+```
+
+# Frontend
+```
+npm install
+npm run dev
 ```
 
 # Fluxo de entrega do software
