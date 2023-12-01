@@ -1,0 +1,24 @@
+# Arquivos e diretórios específicos do Nuxt.js
+front/.nuxt
+front/dist
+front/.env
+
+# Dependências
+front/node_modules/*
+
+# Arquivos de compilação
+front/*.log
+front/*.lock
+front/*.log.*
+front/*.log
+front/npm-debug.log*
+
+# Arquivos temporários
+front/.DS_Store
+front/Thumbs.db
+
+# Ambiente de desenvolvimento
+front/.env
+
+# Cache de dependências npm
+front/.npm
