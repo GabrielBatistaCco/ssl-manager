@@ -1,5 +1,6 @@
 # Arquivos e diretórios específicos do Nuxt.js
 front/.nuxt
+front/.nuxt/*
 front/.output
 front/dist
 front/.env
