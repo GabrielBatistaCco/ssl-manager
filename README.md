@@ -23,11 +23,15 @@ nano .env
 ```
 _Nela você deve declarar a variavel SERVER_IP com o ip da sua maquina_
 
-# Executar server
+# Executar em desenvolvimento
 ```
 python3 manage.py runserver
 ```
 
+# Executar em desenvolvimento
+```
+python3 manage.py runserver IP_DA_SUA_MAQUINA:8000
+```
 
 # Frontend 
 _Todos os comandos devem ser executados a partir da pasta ./front_
