@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +29,7 @@ SECRET_KEY = 'django-insecure-c*in7z1f=2hms6lw*qxg_1uy468r2-r_)**m$8h#n#pmndz8c#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.29.124', 'localhost']
 
 # Application definition
 
@@ -78,8 +82,11 @@ TEMPLATES = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://localhost:8080"
+    "http://localhost:8080",
+    "http://"+ os.environ.get('SERVER_IP', '127.0.0.1'),
+    "http://"+ os.environ.get('SERVER_IP', '127.0.0.1') +":8000",
 ]
+
 
 WSGI_APPLICATION = 'projeto_ssl.wsgi.application'
 
@@ -127,7 +134,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
+# https://docs.djangoproject.com/en/4.2/howto/static-files/'
 
 STATIC_URL = 'static/'
 
@@ -139,3 +146,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+SECURE_SSL_REDIRECT=False

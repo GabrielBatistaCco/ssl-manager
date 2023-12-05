@@ -22,3 +22,11 @@ front/Thumbs.db
 
 # Cache de dependências npm
 front/.npm
+
+
+
+# backend
+django/db.sqlite*
+__pycache__
+migrations
+venv
