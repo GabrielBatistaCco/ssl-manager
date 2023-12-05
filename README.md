@@ -1,9 +1,9 @@
-# Backend
+## Backend
 ## Instalação e execução
 
 ```
 apt install python3 -y
-pip3 install django djangorestframework pandas pyOpenSSL django-cors-headers
+pip3 install django djangorestframework pandas pyOpenSSL django-cors-headers python-dotenv
 
 ```
 
@@ -15,16 +15,73 @@ cd /var/www/ssl/python
 # Criar o banco de dados
 python3 manage.py makemigrations app_ssl
 python3 manage.py migrate
+```
+
+### Configure as variaveis de ambiente
+```
+nano .env
+```
+_Nela você deve declarar a variavel SERVER_IP com o ip da sua maquina_
 
 # Executar server
+```
 python3 manage.py runserver
 ```
 
-# Frontend
+
+# Frontend 
+_Todos os comandos devem ser executados a partir da pasta ./front_
+## Executar em desenvolvimento
 ```
 npm install
 npm run dev
 ```
+
+## Executar em produção
+
+```
+cd /var/www/ssl/front
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm install node
+apt install npm
+npm install
+npm install -g nuxt
+nuxt generate
+cd dist
+```
+
+### Configure as variaveis de ambiente
+```
+nano .env
+```
+_Nela você deve declarar a variavel VITE_API_URL com a url da api ex.: http://localhost:8000_
+
+
+
+### Instalar o NGinx
+
+```
+apt-get install nginx
+rm -rf /etc/nginx/sites-enabled/default 
+nano /etc/nginx/sites-enabled/default 
+```
+_Cole esse conteudo no arquivo_
+
+```
+server {
+    listen 80;
+    server_name dominio.com;
+
+    location / {
+        root /var/www/ssl/front/dist;
+        try_files $uri $uri/ /index.html;
+    }
+}
+
+service nginx restart
+```
+
 
 # Fluxo de entrega do software
 
