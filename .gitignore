@@ -3,7 +3,7 @@ front/.nuxt
 front/.nuxt/*
 front/.output
 front/dist
-front/.env
+front/.env*
 
 # Dependências
 front/node_modules/*
@@ -29,4 +29,4 @@ front/.npm
 django/db.sqlite*
 __pycache__
 migrations
-venv
+django/.env
