@@ -48,9 +48,43 @@ export default {
       headers: [
         { title: "ID", key: "id" },
         { title: "Domínio", key: "domain" },
-        { title: "Url ssls", key: "ssls_url" },
+        { title: "Ativação", key: "activation_ssl" },
+        { title: "Validade", key: "expiration_ssl" },
+        { title: "Produto", key: "product_name" },
+        { title: "Emissor", key: "issuer" },
+        { title: "Status", key: "status_ssl" },
         { title: "", key: "actions" },
       ],
+      product_name_options: [
+        {
+          "value": "ixc_provedor",
+          "text": "IXC Provedor"
+        },
+        {
+          "value": "central_assinante",
+          "text": "Central do Assinante"
+        },
+        {
+          "value": "site",
+          "text": "Site"
+        },
+        {
+          "value": "ixc_franquia",
+          "text": "IXC Franquia"
+        },
+        {
+          "value": "speedtest",
+          "text": "Speed Test"
+        },
+        {
+          "value": "opa_suite",
+          "text": "Opa! Suite"
+        },
+        {
+          "value": "acs",
+          "text": "IXC Acs"
+        }
+      ]
     }; 
   },
   created() {
@@ -59,7 +93,46 @@ export default {
   methods: {
     async getCertificates() {
       try {
-        this.certificates = (await axios.get(`${import.meta.env.VITE_API_URL}/certificates/`)).data;
+        this.certificates = [];
+        let certificates = (await axios.get(`${import.meta.env.VITE_API_URL}/certificates/`)).data;
+        certificates.forEach(element => {
+            let activation_ssl = this.formatDate(element.activation_ssl);
+            let expiration_ssl = this.formatDate(element.expiration_ssl);
+            element.activation_ssl = activation_ssl ? activation_ssl : '-';
+            element.expiration_ssl = expiration_ssl ? expiration_ssl : '-';
+            element.issuer = element.issuer && element.issuer != null ? element.issuer : '-';
+            console.log(element.product_name)
+            element.product_name = this.product_name_options.find( option => 
+              option.value === element.product_name
+            ).text;
+
+            switch(element.status_ssl) {
+              case 'Active':
+                element.status_ssl = 'Ativo';
+              break;
+              case 'Expired':
+                element.status_ssl = 'Expirado';
+              break;
+              case 'Abandoned': 
+                element.status_ssl = 'Abandonado'
+              break;
+              case 'Last day':
+                element.status_ssl = 'Ultimo dia';
+              break;
+              case 'Available':
+                element.status_ssl = 'Disponível'
+              break;
+              case 'Inconsistent':
+                element.status_ssl = 'Inconsistente';
+              break;
+              case 'Inactive':
+              default:
+                element.status_ssl = 'Inativo';
+              break;
+            }
+
+            this.certificates.push(element)
+        });
       } catch (error) {
         toast(`Ocorreu um erro ao carregar a pagina, contate o administrador`, {
           autoClose: 1000,
@@ -68,11 +141,22 @@ export default {
         });
       }
     },
-    
+
+    formatDate(date) {
+      if(!date) return  '';
+      date = new Date(date); 
+      if(isNaN(new Date(date).getTime())) return '';
+      let day = date.getDate();
+      let month = date.getMonth() + 1;
+      let year = date.getFullYear();
+      let dateFormtat = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
+      return dateFormtat;
+    },
+
     async destroy(certificate) {
       try {
         if (confirm(`Deseja deletar ${certificate.domain}?`)) {
-          await axios.delete(`${import.meta.env.VITE_API_URL}/certificates/${certificate.id}`);
+          await axios.delete(`${import.meta.env.VITE_API_URL}/certificates/${certificate.id}/`);
           toast(`Registro deletado com sucesso`, {
             autoClose: 1000,
             position: 'bottom-right',
@@ -81,7 +165,6 @@ export default {
           return this.getCertificates();
         }
       } catch (error) {
-        console.log(error)
         toast(`Ocorreu um erro ao deletar o registro id ${certificate.id}, contate o administrador`, {
           autoClose: 1000,
           position: 'bottom-right',

@@ -9,6 +9,7 @@ class CertSerializer(serializers.ModelSerializer):
          'id',
          'domain', 
          'ssls_url', 
+         'product_name', 
         )
 
     def to_representation(self, instance):

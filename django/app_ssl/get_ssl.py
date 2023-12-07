@@ -2,7 +2,7 @@ import ssl
 import socket
 import re
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 from OpenSSL import crypto
 
 class GetSSLCert:
@@ -61,21 +61,33 @@ class GetSSLCert:
             }
 
     def get_ssl_status(self):
-        if self.status_ssl == 'UNUSED':
-            self.status_ssl = 'Available'
-        elif self.ssls_url is not None and self.ssls_url.strip() != '' and (self.issuer and self.issuer.lower() == "let's encrypt"):
-            self.status_ssl = 'Inconsistent'
-        elif self.expiration_ssl is not None:
-            self.expiration_ssl = datetime.strptime(self.expiration_ssl, '%Y-%m-%d')
-            now = datetime.now()
-            if self.expiration_ssl > now:
-                self.status_ssl = 'Active'
-            elif self.expiration_ssl == now:
-                self.status_ssl = 'Last day'
+
+        try:
+            if self.status_ssl == 'UNUSED' or (self.domain is None and self.ssls_url is not None):
+                self.status_ssl = 'Available'
+            elif self.ssls_url is not None and self.ssls_url.strip() != '' and (self.issuer and self.issuer.lower() == "let's encrypt"):
+                self.status_ssl = 'Inconsistent'
+            elif self.expiration_ssl is not None:
+                self.expiration_ssl = datetime.strptime(self.expiration_ssl, '%Y-%m-%d').date()
+
+                today = datetime.now().date()
+                seven_days_later = today + timedelta(days=7)
+                thirty_days_later = today + timedelta(days=30)
+
+                if self.expiration_ssl < today:
+                    self.status_ssl = 'Expired'
+                elif self.expiration_ssl == today:
+                    self.status_ssl = 'Last day'
+                elif self.expiration_ssl <= seven_days_later:
+                    self.status_ssl = 'Last week'
+                elif self.expiration_ssl <= thirty_days_later:
+                    self.status_ssl = 'Last month'
+                else:
+                    self.status_ssl = 'Active'
             else:
-                self.status_ssl = 'Expired'
-        else:
-            self.status_ssl = 'Inactive'
+                self.status_ssl = 'Inactive'
+        except Exception as e:
+            print(e)
 
         return {'status_ssl': self.status_ssl}
 

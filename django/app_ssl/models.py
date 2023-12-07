@@ -48,6 +48,8 @@ class Cert(models.Model):
             ('Expired', 'Expired'),
             ('Abandoned', 'Abandoned'),
             ('Last day', 'Last day'),
+            ('Last week', 'Last week'),
+            ('Last month', 'Last month'),
             ('Available', 'Available'),
             ('Inconsistent','Inconsistent')
         ],
@@ -61,4 +63,19 @@ class Cert(models.Model):
         auto_now_add=True,
         null=False,
         blank=False
+    )
+    product_name = models.CharField(
+        choices = [
+            ('ixc_provedor','ixc_provedor'), 
+            ('central_assinante','central_assinante'), 
+            ('site','site'), 
+            ('ixc_franquia','ixc_franquia'), 
+            ('speedtest','speedtest'), 
+            ('opa_suite','opa_suite'), 
+            ('acs','acs'),
+        ],
+        verbose_name='Product name',
+        null=False,
+        blank=True,
+        max_length=17
     )
