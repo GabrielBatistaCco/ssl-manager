@@ -47,7 +47,7 @@ export default {
       certificates: [],
       headers: [
         { title: "ID", key: "id" },
-        { title: "Domínio", key: "domain" },
+        { title: "Domínio", key: "domain" }, 
         { title: "Ativação", key: "activation_ssl" },
         { title: "Validade", key: "expiration_ssl" },
         { title: "Produto", key: "product_name" },
