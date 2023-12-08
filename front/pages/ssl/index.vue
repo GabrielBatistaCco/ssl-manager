@@ -57,6 +57,10 @@ export default {
       ],
       product_name_options: [
         {
+          "value": "",
+          "text": "-"
+        },
+        {
           "value": "ixc_provedor",
           "text": "IXC Provedor"
         },
@@ -82,7 +86,7 @@ export default {
         },
         {
           "value": "acs",
-          "text": "IXC Acs"
+          "text": "IXC ACS"
         }
       ]
     }; 
@@ -101,7 +105,6 @@ export default {
             element.activation_ssl = activation_ssl ? activation_ssl : '-';
             element.expiration_ssl = expiration_ssl ? expiration_ssl : '-';
             element.issuer = element.issuer && element.issuer != null ? element.issuer : '-';
-            console.log(element.product_name)
             element.product_name = this.product_name_options.find( option => 
               option.value === element.product_name
             ).text;
@@ -134,6 +137,7 @@ export default {
             this.certificates.push(element)
         });
       } catch (error) {
+        console.log(error)
         toast(`Ocorreu um erro ao carregar a pagina, contate o administrador`, {
           autoClose: 1000,
           position: 'bottom-right',
@@ -165,6 +169,7 @@ export default {
           return this.getCertificates();
         }
       } catch (error) {
+        console.log(error)
         toast(`Ocorreu um erro ao deletar o registro id ${certificate.id}, contate o administrador`, {
           autoClose: 1000,
           position: 'bottom-right',
@@ -187,6 +192,7 @@ export default {
         });
 
       } catch (error) {
+        console.log(error)
         toast(`Ocorreu um erro, contate o administrador`, { 
           autoClose: 1000,
           position: 'bottom-right',

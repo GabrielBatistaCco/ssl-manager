@@ -10,7 +10,7 @@ pip3 install django djangorestframework pandas pyOpenSSL django-cors-headers pyt
 ```
 mkdir -p /var/www/ssl/
 git clone https://github.com/GabrielBatistaCco/ssl.git /var/www/ssl/
-cd /var/www/ssl/python
+cd /var/www/ssl/django/
 
 # Criar o banco de dados
 python3 manage.py makemigrations app_ssl

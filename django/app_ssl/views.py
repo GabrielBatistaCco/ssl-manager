@@ -85,12 +85,10 @@ class CsvViewSet(viewsets.ModelViewSet):
             csv_data = pd.read_csv(csv_file)
             filtered_data = self.filter_csv_data(csv_data)
 
-            certs_count = len(certs_count)
-
             with ThreadPoolExecutor(max_workers=50) as executor:
                 executor.map(self.process_csv_line, filtered_data.itertuples(index=False))
 
-            return Response({'detail': f'{certs_count} certificates imported successfully.'}, status=status.HTTP_200_OK)
+            return Response({'detail': 'Certificates imported successfully.'}, status=status.HTTP_200_OK)
 
         except pd.errors.EmptyDataError:
             return Response({'detail': 'The CSV file is empty.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -103,6 +101,7 @@ class CsvViewSet(viewsets.ModelViewSet):
         csv_domain = line.common_name
         csv_ssls_url = line.details_URL
         csv_status_ssl = line.status
+        csv_cert = None
 
         get_ssl = GetSSLCert(
             domain=csv_domain,
@@ -112,7 +111,12 @@ class CsvViewSet(viewsets.ModelViewSet):
 
         certificate_data = get_ssl.get_certificate(datas=True, status=True)
 
-        csv_cert, _ = Cert.objects.get_or_create(ssls_url=form_ssls_url)
+        if csv_domain is not None and csv_ssls_url is not None:
+            csv_cert, created = Cert.objects.get_or_create(domain=csv_domain, ssls_url=csv_ssls_url)
+        elif csv_domain is not None and csv_ssls_url is None:
+            csv_cert, created = Cert.objects.get_or_create(domain=csv_domain)
+        elif csv_domain is None and csv_ssls_url is not None:
+            csv_cert, created = Cert.objects.get_or_create(ssls_url=csv_ssls_url)
 
         for field, value in certificate_data.items():
             setattr(csv_cert, field, value)
