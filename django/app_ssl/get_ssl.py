@@ -14,7 +14,7 @@ class GetSSLCert:
         self.expiration_weekday = None
         self.issuer = issuer
         self.status_ssl = status_ssl
-        self.ssls_url = ssls_url if not re.compile(r'^\s*$').match(ssls_url) else None
+        self.ssls_url = ssls_url if pd.notna(ssls_url) else None
         self.timeout = 2.5
 
     def get_certificate_dates(self):
@@ -92,6 +92,7 @@ class GetSSLCert:
         return {'status_ssl': self.status_ssl}
 
     def get_certificate(self, datas=True, status=True):
+
         certificate_data = {
             'domain': self.domain,
             'activation_ssl': self.activation_ssl,
