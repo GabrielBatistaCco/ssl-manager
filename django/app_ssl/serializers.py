@@ -1,5 +1,7 @@
-from rest_framework import serializers
 from .models import Cert
+from .custom_errors import CustomValidationError
+from rest_framework import serializers, status
+from rest_framework.response import Response
 import re
 
 class CertSerializer(serializers.ModelSerializer):
@@ -28,20 +30,30 @@ class CertSerializer(serializers.ModelSerializer):
         return representation
 
     def validate_data(self, data):
-        domain = data.get('domain')
-        ssls_url = data.get('ssls_url')  # https://www.ssls.com/user/bundles/view/...
+        domain = data.get('domain') 
+        ssls_url = data.get('ssls_url') # https://www.ssls.com/user/bundles/view/...
+        product_name = data.get('product_name')
+
+        ssls_url_regex = re.compile(r'^(http|https)://(www\.)?ssls\.com/user/bundles/view/[a-zA-Z0-9]+$')
+        ssls_url_validator = ssls_url_regex.match(ssls_url) if ssls_url is not None else True
 
         domain_exists = Cert.objects.filter(domain=domain).exclude(pk=self.instance.pk if self.instance else None).exists() if domain is not None else False
         url_exists = Cert.objects.filter(ssls_url=ssls_url).exclude(pk=self.instance.pk if self.instance else None).exists() if ssls_url is not None else False
 
-        url_validator = re.compile(r'^(http|https)://(www\.)?ssls\.com/user/bundles/view/[a-zA-Z0-9]+$')
+        if not product_name:
+            raise CustomValidationError('A product must be filled in!', status_code=status.HTTP_200_OK)
 
+        if not domain and not ssls_url:
+            raise CustomValidationError('At least one of the fields "Domain" or "SSL URL" must be filled.', status_code=status.HTTP_200_OK)
+
+        if not ssls_url_validator:
+            raise CustomValidationError('Invalid URL, must be in the format "https://www.ssls.com/user/bundles/view/..."', status_code=status.HTTP_200_OK)
+        
         if domain_exists:
-            raise serializers.ValidationError(f'This domain is already registered, check the list of certificates.')
-        elif ssls_url is not None and not url_validator.match(ssls_url):
-            raise serializers.ValidationError('Invalid URL, must be in the format "https://www.ssls.com/user/bundles/view/..."')
-        elif url_exists:
-            raise serializers.ValidationError('This URL is already registered, check the list of certificates.')
+            raise CustomValidationError('This domain is already registered, check the list of certificates.', status_code=status.HTTP_200_OK)
+
+        if url_exists:
+            raise CustomValidationError('This URL is already registered, check the list of certificates.', status_code=status.HTTP_200_OK)
 
         return data
 

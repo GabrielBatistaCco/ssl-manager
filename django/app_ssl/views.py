@@ -1,15 +1,15 @@
 from .models import Cert
 from .get_ssl import GetSSLCert
+from .serializers import CertSerializer
+from .custom_errors import CustomValidationError
 from django.shortcuts import render
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.exceptions import ValidationError, NotFound
+from rest_framework.exceptions import ValidationError
 from rest_framework import viewsets, status
-from .serializers import CertSerializer
 from concurrent.futures import ThreadPoolExecutor
 from django.db import transaction
 import pandas as pd
-import re
 
 class CertViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
@@ -19,17 +19,18 @@ class CertViewSet(viewsets.ModelViewSet):
 
         domain_form = serializer.validated_data.get('domain')
         ssls_url_form = serializer.validated_data.get('ssls_url')
-
-        if not domain_form and not ssls_url_form:
-            raise ValidationError({'detail': 'At least one of the fields "Domain" or "SSL URL" must be filled.'})
+        product_name_form = serializer.validated_data.get('product_name')
 
         get_ssl = GetSSLCert(
             domain=domain_form,
             ssls_url=ssls_url_form
         )
 
-        # Validate domain and ssls_url
-        data_to_validate = {"domain": get_ssl.domain, "ssls_url": get_ssl.ssls_url}
+        data_to_validate = {
+            "domain": get_ssl.domain,
+            "ssls_url": get_ssl.ssls_url,
+            "product_name": product_name_form
+        }
         serializer.validate_data(data_to_validate)
 
         try:
@@ -39,7 +40,7 @@ class CertViewSet(viewsets.ModelViewSet):
             serializer.save()
 
         except Exception as e:
-            return Response({'detail': f'Error obtaining the certificate: {e}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'detail': f'Error obtaining the certificate: {e}'}, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -69,7 +70,6 @@ class CertViewSet(viewsets.ModelViewSet):
         except Cert.DoesNotExist:
             raise ValidationError({'detail': 'Record not found.'})
 
-
 class CsvViewSet(viewsets.ModelViewSet):
     queryset = Cert.objects.all()
     serializer_class = CertSerializer
@@ -77,7 +77,7 @@ class CsvViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
 
         if 'file' not in request.FILES:
-            return Response({'detail': 'The file was not provided.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'The file was not provided.'}, status=status.HTTP_200_OK)
 
         csv_file = request.FILES['file']
 
@@ -91,10 +91,10 @@ class CsvViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'Certificates imported successfully.'}, status=status.HTTP_200_OK)
 
         except pd.errors.EmptyDataError:
-            return Response({'detail': 'The CSV file is empty.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'The CSV file is empty.'}, status=status.HTTP_200_OK)
 
         except pd.errors.ParserError:
-            return Response({'detail': 'The provided file is not a valid CSV file.'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'The provided file is not a valid CSV file.'}, status=status.HTTP_200_OK)
 
     @transaction.atomic
     def process_csv_line(self, line):
@@ -141,12 +141,12 @@ class RefreshCertsViewSet(viewsets.ModelViewSet):
         certs_count = certs_to_refresh.count()
 
         if certs_count == 0:
-            return Response({'detail': 'No certificates to update.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'detail': 'No certificates to update.'}, status=status.HTTP_200_OK)
 
         with ThreadPoolExecutor(max_workers=50) as executor:
             executor.map(self.refresh_certificate, certs_to_refresh)
 
-        return Response({'detail': f'{certs_count} certificates updated successfully.'}, status=status.HTTP_200_OK)
+        return Response({'detail': f'Certificates updated successfully.'}, status=status.HTTP_200_OK)
 
     @transaction.atomic
     def refresh_certificate(self, cert):
