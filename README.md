@@ -54,6 +54,7 @@ WantedBy=default.target">/etc/systemd/system/ssl-django.service;
 
 ```
 systemctl daemon-reload;
+systemctl enable ssl-django.service
 systemctl start ssl-django.service;
 ```
 
