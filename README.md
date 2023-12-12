@@ -28,9 +28,33 @@ _Nela você deve declarar a variavel SERVER_IP com o ip da sua maquina_
 python3 manage.py runserver
 ```
 
-# Executar em desenvolvimento
+# Executar em produção
+
 ```
-python3 manage.py runserver IP_DA_SUA_MAQUINA:8000
+echo "[Unit]
+Description='SSL Manager'
+After=network.target
+
+[Service]
+WorkingDirectory=/var/www/ssl/
+ExecStart=/usr/bin/python3 django/manage.py runserver 0.0.0.0:8000
+
+# Restart=always
+
+# StandardOutput=file:/var/log/ssl/django.log
+# StandardError=file:/var/log/ssl/django-error.log
+StandardOutput=journal
+StandardError=journal
+
+SyslogIdentifier=ssl-manager
+
+[Install]
+WantedBy=default.target">/etc/systemd/system/ssl-django.service;
+```
+
+```
+systemctl daemon-reload;
+systemctl start ssl-django.service;
 ```
 
 # Frontend 
