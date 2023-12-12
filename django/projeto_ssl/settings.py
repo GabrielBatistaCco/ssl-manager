@@ -26,8 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-c*in7z1f=2hms6lw*qxg_1uy468r2-r_)**m$8h#n#pmndz8c#'
 
-ALLOWED_HOSTS = ['192.168.29.124', 'localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = [ 
+    'localhost',
+    '127.0.0.1',
+    os.environ.get('SERVER_IP', '127.0.0.1'),
+]
 # Application definition
 
 INSTALLED_APPS = [
