@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
 ]
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 CRON_CLASSES = [
     'django_cron.cron.CronJobBase',
@@ -89,7 +89,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://"+ os.environ.get('SERVER_IP', '127.0.0.1') +":8000",
 ]
 
-print(CORS_ALLOWED_ORIGINS)
+# print(CORS_ALLOWED_ORIGINS)
 
 WSGI_APPLICATION = 'projeto_ssl.wsgi.application'
 
