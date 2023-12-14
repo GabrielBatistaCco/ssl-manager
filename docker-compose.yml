@@ -5,7 +5,7 @@ services:
     image: mongo:4.4.26
     container_name: mongo-db
     volumes:
-      - mongo-data:/var/lib/mongo
+      - mongo-data:/data
     networks:
       - app-network
     # ports:
