@@ -51,7 +51,8 @@ class Cert(models.Model):
             ('Last week', 'Last week'),
             ('Last month', 'Last month'),
             ('Available', 'Available'),
-            ('Inconsistent','Inconsistent')
+            ('Inconsistent','Inconsistent'),
+            ('Failed','Failed')
         ],
         verbose_name='SSL Status',
         null=False,

@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  mongo-db:
+    image: mongo:4.4.26
+    container_name: mongo-db
+    volumes:
+      - mongo-data:/var/lib/mongo
+    networks:
+      - app-network
+    # ports:
+    #   - "27017:27017"
+
+  django-backend:
+    build: django
+    image: django-backend
+    container_name: django-backend
+    networks:
+      - app-network
+    depends_on:
+      - mongo-db
+    # ports:
+    #   - "8000:8000"
+
+  vue-frontend:
+    build: front
+    image: vue-frontend
+    container_name: vue-frontend
+    networks:
+      - app-network
+    depends_on:
+      - django-backend
+    ports:
+      - "80:80"
+
+volumes:
+  mongo-data:
+
+networks:
+  app-network:

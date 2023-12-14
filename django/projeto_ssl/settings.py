@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-c*in7z1f=2hms6lw*qxg_1uy468r2-r_)**m$8h#n#pmndz8c#
 ALLOWED_HOSTS = [ 
     'localhost',
     '127.0.0.1',
-    os.environ.get('SERVER_IP', '127.0.0.1'),
+    os.environ.get('FRONT_HOST', '127.0.0.1'),
 ]
 # Application definition
 
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_ssl',
+    'djongo',
     'rest_framework',
     'corsheaders',
 ]
@@ -85,8 +86,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://127.0.0.1:3000",
-    "http://"+ os.environ.get('SERVER_IP', '127.0.0.1'),
-    "http://"+ os.environ.get('SERVER_IP', '127.0.0.1') +":8000",
+    "http://"+ os.environ.get('FRONT_HOST', '127.0.0.1'),
+    "http://"+ os.environ.get('FRONT_HOST', '127.0.0.1') +":8000",
 ]
 
 # print(CORS_ALLOWED_ORIGINS)
@@ -97,13 +98,25 @@ WSGI_APPLICATION = 'projeto_ssl.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "djongo",
+        "NAME": "mongo_db",
+        "CLIENT": {
+            "host": "mongodb://" + os.getenv('DB_HOST', '127.0.0.1') + ":27017/",
+            "port": int(os.getenv('DB_PORT', 27017)),
+            # "username": os.environ.get('MONGO_DB_USERNAME'),
+            # "password": os.environ.get('MONGO_DB_PASSWORD'),
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
