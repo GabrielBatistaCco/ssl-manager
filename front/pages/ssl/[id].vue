@@ -13,7 +13,7 @@
             </v-col>
             <v-col cols="12">
               <v-text-field v-model="certificate.domain" v-value="certificate.domain" 
-                label="Domínio" />
+                label="Domínio *" />
             </v-col>
             <v-col cols="12">
               <v-text-field v-model="certificate.ssls_url" v-value="certificate.ssls_url" label="Url ssls" />
@@ -24,7 +24,7 @@
                 :items="product_name_options"
                 item-title="text"
                 item-value="value"
-                label="Nome do produto"
+                label="Nome do produto *"
                 return-object
                 single-line
                 theme="dark"
@@ -133,25 +133,35 @@ export default {
 
         if (!this.certificate.id) {
           let response = await axios.post(`${import.meta.env.VITE_API_URL}/certificates/`, certificate);
-          response = response.data.domain
-          toast(`Registro criado com sucesso`, {
-            autoClose: 1000,
-            position: 'bottom-right',
-            theme: 'dark'
-          });
+          response = response.data
 
-          this.$router.push('/ssl')
+          if(response?.detail?.length ) {
+            toast(`Ocorreu um erro ao criar o certificado, verifique os dados e tente novamente`, {
+              autoClose: 1000,
+              position: 'bottom-right',
+              theme: 'dark'
+            });
+            console.log(response.detail)
+          } else {
+            toast(`Registro criado com sucesso`, {
+              autoClose: 1000,
+              position: 'bottom-right',
+              theme: 'dark'
+            });
+            this.$router.push('/ssl')
+          }
 
         } else {
           certificate.id = this.certificate.id
-          await axios.put(`${import.meta.env.VITE_API_URL}/certificates/${certificate.id}/`, certificate);
+          let response = await axios.put(`${import.meta.env.VITE_API_URL}/certificates/${certificate.id}/`, certificate);
+          console.log(response)
           toast(`Registro atualizado com sucesso`, {
             autoClose: 1000,
             position: 'bottom-right',
             theme: 'dark'
           });
 
-          return this.$router.push('/ssl');
+          // return this.$router.push('/ssl');
         }
       } catch (error) {
         toast(`Ocorreu um erro no cadastro, contate o administrador`, {

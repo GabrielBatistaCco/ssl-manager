@@ -9,7 +9,7 @@
                 <template v-slot:prepend>
                   <v-app-bar-nav-icon></v-app-bar-nav-icon>
                 </template>
-                <template v-slot:default>
+                <template v-slot:default >
                   <LogoIxc class="w-100"></LogoIxc>
                 </template>
               </v-app-bar>
