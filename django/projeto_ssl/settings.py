@@ -26,13 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-c*in7z1f=2hms6lw*qxg_1uy468r2-r_)**m$8h#n#pmndz8c#'
 
-ALLOWED_HOSTS = [
-    '192.168.0.0/16',
-    '172.16.0.0/12',
-    '10.0.0.0/8',
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = [ '*' ]
+# ALLOWED_HOSTS = [
+#     '192.168.0.0/16',
+#     '172.16.0.0/12',
+#     '10.0.0.0/8',
+#     'localhost',
+#     '127.0.0.1',
+# ]
 
 CORS_ALLOWED_ORIGINS = [
     'http://' + os.getenv('SERVER_IP', 'localhost'),

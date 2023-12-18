@@ -27,6 +27,14 @@ cd /var/www/ssl/front
 cp .env-example .env
 ```
 
+### Build front-end
+
+```
+cd /var/www/ssl/front
+npm install
+nuxt generate
+```
+
 ### Build das imagens docker
 
 ```
