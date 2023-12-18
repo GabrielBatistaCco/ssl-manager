@@ -3,7 +3,7 @@ front/.nuxt
 front/.nuxt/*
 front/.output
 front/dist
-front/.env*
+front/.env
 
 # Dependências
 front/node_modules/*

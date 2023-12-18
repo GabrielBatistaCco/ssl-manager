@@ -3,6 +3,7 @@ version: "3.7"
 services:
   mongo-db:
     image: mongo:4.4.26
+    restart: unless-stopped
     container_name: mongo-db
     volumes:
       - mongo-data:/data
@@ -14,22 +15,28 @@ services:
   django-backend:
     build: django
     image: django-backend
+    restart: unless-stopped
     container_name: django-backend
     networks:
       - app-network
     depends_on:
       - mongo-db
-    # ports:
-    #   - "8000:8000"
+    # volumes:
+    #   - ./django:/app/django
+    ports:
+      - "8000:8000"
 
-  vue-frontend:
+  nuxt-frontend:
     build: front
-    image: vue-frontend
-    container_name: vue-frontend
+    image: nuxt-frontend
+    restart: unless-stopped
+    container_name: nuxt-frontend
     networks:
       - app-network
     depends_on:
       - django-backend
+    # volumes:
+    #   - ./front/.output/public/:/var/www
     ports:
       - "80:80"
 

@@ -1,3 +1,47 @@
+## Docker
+
+Instale os pacotes essenciais:
+
+```
+apt install -y git docker.io docker-compose;
+```
+
+### Build e execução
+
+Crie um diretório e baixe os arquivos da aplicação:
+
+```
+mkdir -p /var/www/ssl/
+git clone https://github.com/GabrielBatistaCco/ssl.git /var/www/ssl/
+```
+
+### Configuração .env
+
+Copie e edite o arquivo exemplo preenchendo a variável SERVER_IP com o endereço IP do servidor:
+
+```
+cd /var/www/ssl/django
+cp .env-example .env
+
+cd /var/www/ssl/front
+cp .env-example .env
+```
+
+### Build das imagens docker
+
+```
+cd /var/www/
+docker-compose build --no-cache
+```
+
+### Execução dos serviços
+
+```
+cd /var/www/
+docker-compose up -d
+```
+
+
 ## Backend
 ## Instalação e execução
 
