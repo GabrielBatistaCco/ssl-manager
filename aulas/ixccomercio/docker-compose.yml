@@ -1,0 +1,11 @@
+services:
+  comercio:
+    build:
+      context: bookworm
+      dockerfile: Dockerfile
+    environment:
+      - HOST_DB=${HOST_DB}
+      - USER_DB=${USER_DB}
+      - PASS_DB=${PASS_DB}
+    ports:
+      - 23443:443

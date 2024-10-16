@@ -1,0 +1,10 @@
+<?php
+define("SERVIDOR","host_db");
+define("USUARIO","user_db");
+define("SENHA","pass_db");
+define("BANCO","ixccomercio");
+define("SENHA_ROOT","pass_root");
+define("HOTSITE","S");
+define("MEMCACHED","S");
+define("LOCATION","BRA");
+?>
