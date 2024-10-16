@@ -1,8 +1,6 @@
 services:
   comercio:
-    build:
-      context: bookworm
-      dockerfile: Dockerfile
+    image: gitlab.ixcsoft.com.br:5050/geral/docker-hub/ixccomercio-db-connection:latest
     environment:
       - HOST_DB=${HOST_DB}
       - USER_DB=${USER_DB}
