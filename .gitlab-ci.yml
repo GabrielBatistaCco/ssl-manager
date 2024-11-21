@@ -1,0 +1,90 @@
+stages:
+  - generate-ssl
+  - build-backend
+  - build-frontend
+  - deploy
+
+generate-ssl-job:
+  before_script:
+    - apk add openssl
+    - VERSAO_SSL=$( head /dev/urandom | tr -dc 'a-zA-Z0-9' | head -c14)
+  stage: generate-ssl
+  image: alpine:latest
+  script:
+    - openssl req -x509 -nodes -days 4380 -newkey rsa:4096 -keyout ixc_cert.key -out ixc_cert.crt -subj '/C=BR/ST='"${VERSAO_SSL}"'/L=Chapeco/O=Dis/CN='"${VERSAO_SSL}"'.ixcsoft.com.br'
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "trigger" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+  artifacts:
+    paths:
+      - "ixc_cert.crt"
+      - "ixc_cert.key"
+    expire_in: "20 min"
+
+build-backend-job:
+  before_script:
+    - cd django/
+    - echo "${REGISTRY_TOKEN}" | docker login ${GITLAB_SERVER}:5050 -u ${REGISTRY_USER} --password-stdin
+  stage: build-backend
+  image: docker:20.10.16
+  tags:
+    - docker-dind
+  services:
+    - docker:20.10.16-dind
+  script:
+    - cp $CI_PROJECT_DIR/ixc_cert.key $CI_PROJECT_DIR/ixc_cert.crt server/
+    - docker build -t ${GITLAB_SERVER}:5050/gabriel.souza/ssl-manager/ssl-django:latest .
+    - docker push ${GITLAB_SERVER}:5050/gabriel.souza/ssl-manager/ssl-django:latest
+    - docker rmi ${GITLAB_SERVER}:5050/gabriel.souza/ssl-manager/ssl-django:latest
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "trigger" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+      changes:
+        - 'django/**/**'
+  dependencies:
+    - generate-ssl-job
+
+build-frontend-job:
+  before_script:
+    - cd front/
+    - echo "${REGISTRY_TOKEN}" | docker login ${GITLAB_SERVER}:5050 -u ${REGISTRY_USER} --password-stdin
+  stage: build-frontend
+  image: docker:20.10.16
+  tags:
+    - docker-dind
+  services:
+    - docker:20.10.16-dind
+  script:
+    - cp $CI_PROJECT_DIR/ixc_cert.key $CI_PROJECT_DIR/ixc_cert.crt server/
+    - docker build -t ${GITLAB_SERVER}:5050/gabriel.souza/ssl-manager/ssl-nuxt:latest .
+    - docker push ${GITLAB_SERVER}:5050/gabriel.souza/ssl-manager/ssl-nuxt:latest
+    - docker rmi ${GITLAB_SERVER}:5050/gabriel.souza/ssl-manager/ssl-nuxt:latest
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "trigger" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
+      changes:
+        - 'front/**/**'
+  dependencies:
+    - generate-ssl-job
+
+deploy-app-job:
+  before_script:
+    - apk add --update openssh-client
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "${ID_RSA_PVT}" | tr -d '\r' | ssh-add -
+    - ssh-keyscan $IP_VM >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  stage: deploy
+  image: alpine:latest
+  script:
+    - ssh root@$IP_VM "
+      echo ${REGISTRY_TOKEN} | docker login ${GITLAB_SERVER}:5050 -u ${REGISTRY_USER} --password-stdin;
+      cd /apps/papaya/;
+      docker compose pull;
+      docker compose up -d;"
+  retry: 2
+  rules:
+    - if: $CI_PIPELINE_SOURCE != "trigger" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: on_success
