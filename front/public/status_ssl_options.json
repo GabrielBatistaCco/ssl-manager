@@ -1,0 +1,62 @@
+{
+    "active": {
+        "value": "active",
+        "text": "Ativo",
+        "color": "#41c300"
+    },
+    "expired": {
+        "value": "expired",
+        "text": "Expirado",
+        "color": "#FFEB3B"
+    },
+    "abandoned": {
+        "value": "abandoned",
+        "text": "Abandonado",
+        "color": "#000000"
+    },
+    "last_day": {
+        "value": "last_day",
+        "text": "Ultimo dia",
+        "color": "#FF3D00"
+    },
+    "last_week": {
+        "value": "last_week",
+        "text": "Ultima semana",
+        "color": "#FF9100"
+    },
+    "last_month": {
+        "value": "last_month",
+        "text": "Ultimo mês",
+        "color": "#FFEB3B"
+    },
+    "available": {
+        "value": "available",
+        "text": "Disponível",
+        "color": "#00C853"
+    },
+    "inconsistent": {
+        "value": "inconsistent",
+        "text": "Inconsistente",
+        "color": "#000000"
+    },
+    "failed": {
+        "value": "failed",
+        "text": "Falhou",
+        "color": "#000000"
+    },
+    "duplicated": {
+        "value": "duplicated",
+        "text": "Duplicado",
+        "color": "#DD2C00"
+    },
+    "no_access": {
+        "value": "no_access",
+        "text": "Sem acesso",
+        "color": "#000000"
+    },
+    "unknown": {
+        "value": "unknown",
+        "text": "-",
+        "color": "#000000"
+    }
+}

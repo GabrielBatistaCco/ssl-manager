@@ -1,0 +1,34 @@
+{
+    "ixc_provedor": {
+        "value": "ixc_provedor",
+        "text": "IXC Provedor"
+    },
+    "central_assinante": {
+        "value": "central_assinante",
+        "text": "Central do Assinante"
+    },
+    "site": {
+        "value": "site",
+        "text": "Site"
+    },
+    "ixc_franquia": {
+        "value": "ixc_franquia",
+        "text": "IXC Franquia"
+    },
+    "speedtest": {
+        "value": "speedtest",
+        "text": "Speed Test"
+    },
+    "opa_suite": {
+        "value": "opa_suite",
+        "text": "Opa! Suite"
+    },
+    "acs": {
+        "value": "acs",
+        "text": "IXC ACS"
+    },
+    "orphan": {
+        "value": "orphan",
+        "text": "Orfão"
+    }
+}

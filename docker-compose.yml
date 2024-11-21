@@ -1,47 +1,47 @@
 version: "3.7"
 
 services:
-  mongo-db:
-    image: mongo:4.4.26
+  mariadb:
+    image: mariadb:11.4.1
     restart: unless-stopped
-    container_name: mongo-db
+    container_name: mariadb
     volumes:
-      - mongo-data:/data
+      - /data/mariadb:/var/lib/mysql/
     networks:
       - app-network
-    # ports:
-    #   - "27017:27017"
+    ports:
+      - "3306:3306"
 
-  django-backend:
-    build: django
-    image: django-backend
+  ssl-django:
+    image: ${gitlab_registry}/ssl-django:latest
     restart: unless-stopped
-    container_name: django-backend
+    container_name: ssl-django
     networks:
       - app-network
     depends_on:
-      - mongo-db
-    # volumes:
-    #   - ./django:/app/django
+      - mariadb
     ports:
       - "8000:8000"
+    environment:
+      SERVER_IP: ${SERVER_IP}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
 
-  nuxt-frontend:
-    build: front
-    image: nuxt-frontend
+  ssl-nuxt:
+    image: ${gitlab_registry}/ssl-nuxt:latest
     restart: unless-stopped
-    container_name: nuxt-frontend
+    container_name: ssl-nuxt
     networks:
       - app-network
     depends_on:
-      - django-backend
-    # volumes:
-    #   - ./front/.output/public/:/var/www
+      - ssl-django
     ports:
-      - "80:80"
-
-volumes:
-  mongo-data:
+      - "443:443"
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
 
 networks:
   app-network:

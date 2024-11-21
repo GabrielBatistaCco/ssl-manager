@@ -1,0 +1,70 @@
+version: "3.7"
+
+services:
+  # ssl-mongodb:
+  #   image: mongo:4.4.26
+  #   restart: unless-stopped
+  #   container_name: ssl-mongodb
+  #   # volumes:
+  #   #   - mongodb:/data
+  #   networks:
+  #     - app-network
+  #   ports:
+  #     - "27017:27017"
+
+  ssl-mariadb:
+    image: mariadb:latest
+    restart: unless-stopped
+    container_name: ssl-mariadb
+    #volumes:
+    #  - /data/mariadb:/data
+    networks:
+      - ssl-network
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+
+  ssl-django:
+    build: django
+    image: teste-django
+    # image: gitlab.ixcsoft.com.br:5050/gabriel.souza/ssl-manager/ssl-django:latest
+    restart: unless-stopped
+    container_name: ssl-django
+    volumes:
+      - ./django/:/app/django/
+    networks:
+      - ssl-network
+    depends_on:
+      - ssl-mariadb
+    ports:
+      - "8000:8000"
+    environment:
+      SERVER_IP: ${SERVER_IP}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: $pip install --upgrade pip {DB_DATABASE}
+    # entrypoint: python manage.py runserver 0.0.0.0:8000
+
+  ssl-nuxt:
+    build: front
+    image: teste-nuxt
+    # image: gitlab.ixcsoft.com.br:5050/gabriel.souza/ssl-manager/ssl-nuxt:latest
+    restart: unless-stopped
+    container_name: ssl-nuxt
+    volumes:
+      - ./front/:/app/nuxt/temp/
+    networks:
+      - ssl-network
+    depends_on:
+      - ssl-django
+    ports:
+      - "80:3000"
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+    entrypoint: sh -c "cd temp && npm run dev"
+
+networks:
+  ssl-network:

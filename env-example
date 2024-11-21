@@ -1,0 +1,14 @@
+SERVER_IP="localhost"
+VITE_API_URL="https://${SERVER_IP}:8000"
+DB_HOST='mariadb'
+DB_PORT=3306
+DB_USER='ssl-manager'
+DB_PASSWORD='mudar123'
+DB_DATABASE='ssl-manager'
+
+EMAIL_HOST='smtp-exemplo.com.br'
+EMAIL_HOST_USER='exemplo@email.com'
+EMAIL_HOST_PASSWORD='mudar123'
+DEFAULT_FROM_EMAIL='exemplo@email.com'
+
+SECRET_KEY=''

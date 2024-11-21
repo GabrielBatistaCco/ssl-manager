@@ -1,12 +1,49 @@
-## Docker
+# Ambiente produção
 
 Instale os pacotes essenciais:
 
 ```
-apt install -y git docker.io docker-compose;
+curl -fsSl https://get.docker.com | bash;
 ```
 
-### Build e execução
+## Configuração .env
+
+Copie e edite o arquivo exemplo preenchendo a variável SERVER_IP com o endereço IP do servidor:
+
+```
+cd ./django
+cp .env-example .env
+
+cd ./front
+cp .env-example .env
+```
+
+Além do .env nos diretórios, precisa ter um principal, para uso do docker-compose, então copie as variáveis presentes nos dois arquivos .env anteriores e crie um env na raiz do projeto:
+
+```
+cat ./django/.env ./front/.env > .env
+```
+
+OBS: Remova a variável SERVER_IP duplicada.
+
+## Executar da aplicação
+
+Execute o arquivo compose no servidor:
+
+```
+docker compose up -d
+```
+
+# Ambiente desenvolvimento
+
+## Ajuste as permissões docker:
+
+```
+sudo usermod -aG docker $USER
+sudo chmod 666 /var/run/docker.sock
+```
+
+## Build e execução
 
 Crie um diretório e baixe os arquivos da aplicação:
 
@@ -15,19 +52,7 @@ mkdir -p /var/www/ssl/
 git clone https://github.com/GabrielBatistaCco/ssl.git /var/www/ssl/
 ```
 
-### Configuração .env
-
-Copie e edite o arquivo exemplo preenchendo a variável SERVER_IP com o endereço IP do servidor:
-
-```
-cd /var/www/ssl/django
-cp .env-example .env
-
-cd /var/www/ssl/front
-cp .env-example .env
-```
-
-### Build front-end
+## Build front-end
 
 ```
 cd /var/www/ssl/front
@@ -35,134 +60,19 @@ npm install
 nuxt generate
 ```
 
-### Build das imagens docker
+## Build das imagens docker
 
 ```
 cd /var/www/
-docker-compose build --no-cache
+docker compose build -f dev-compose.yml --no-cache
 ```
 
-### Execução dos serviços
+## Execução dos serviços
 
 ```
 cd /var/www/
-docker-compose up -d
+docker compose -f dev-compose.yml up -d
 ```
-
-
-## Backend
-## Instalação e execução
-
-```
-apt install python3 -y
-pip3 install django djangorestframework pandas pyOpenSSL django-cors-headers python-dotenv
-
-```
-
-```
-mkdir -p /var/www/ssl/
-git clone https://github.com/GabrielBatistaCco/ssl.git /var/www/ssl/
-cd /var/www/ssl/django/
-
-# Criar o banco de dados
-python3 manage.py makemigrations app_ssl
-python3 manage.py migrate
-```
-
-### Configure as variaveis de ambiente
-```
-nano .env
-```
-_Nela você deve declarar a variavel SERVER_IP com o ip da sua maquina_
-
-# Executar em desenvolvimento
-```
-python3 manage.py runserver
-```
-
-# Executar em produção
-
-```
-echo "[Unit]
-Description='SSL Manager'
-After=network.target
-
-[Service]
-WorkingDirectory=/var/www/ssl/
-ExecStart=/usr/bin/python3 django/manage.py runserver 0.0.0.0:8000
-
-# Restart=always
-
-# StandardOutput=file:/var/log/ssl/django.log
-# StandardError=file:/var/log/ssl/django-error.log
-StandardOutput=journal
-StandardError=journal
-
-SyslogIdentifier=ssl-manager
-
-[Install]
-WantedBy=default.target">/etc/systemd/system/ssl-django.service;
-```
-
-```
-systemctl daemon-reload;
-systemctl enable ssl-django.service
-systemctl start ssl-django.service;
-```
-
-# Frontend 
-_Todos os comandos devem ser executados a partir da pasta ./front_
-## Executar em desenvolvimento
-```
-npm install
-npm run dev
-```
-
-## Executar em produção
-
-```
-cd /var/www/ssl/front
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-source ~/.bashrc
-nvm install node
-apt install npm
-npm install
-npm install -g nuxt
-nuxt generate
-cd dist
-```
-
-### Configure as variaveis de ambiente
-```
-nano .env
-```
-_Nela você deve declarar a variavel VITE_API_URL com a url da api ex.: http://localhost:8000_
-
-
-
-### Instalar o NGinx
-
-```
-apt-get install nginx
-rm -rf /etc/nginx/sites-enabled/default 
-nano /etc/nginx/sites-enabled/default 
-```
-_Cole esse conteudo no arquivo_
-
-```
-server {
-    listen 80;
-    server_name dominio.com;
-
-    location / {
-        root /var/www/ssl/front/dist;
-        try_files $uri $uri/ /index.html;
-    }
-}
-
-service nginx restart
-```
-
 
 # Fluxo de entrega do software
 
